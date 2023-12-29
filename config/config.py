@@ -28,7 +28,7 @@ SONG_DOWNLOAD_DURATION = int(getenv("SONG_DOWNLOAD_DURATION_LIMIT", "180"))
 
 LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
 
-MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "乛⁪⁬𝙈𝙐𝙎𝙄𝘾")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "˛ َِ𝗔َِ𝗹َِ𝘀َِ𝗵 .¹#")
 
 OWNER_ID = list(map(int, getenv("OWNER_ID", "6186856384 6186856384").split()))
 
@@ -40,14 +40,14 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/ZZZ7iZ/-AlexaMusic",
+    "https://github.com/RRR8RR/xvals",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/VL_VO")
-SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/YY5Y8")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BxxBxxL")
+SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/xLxLxLrr3")
 MUST_JOIN = getenv("MUST_JOIN", None)
 
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "False")
@@ -76,15 +76,15 @@ VIDEO_STREAM_LIMIT = int(getenv("VIDEO_STREAM_LIMIT", "3"))
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", "30"))
 
 CHANNEL_SUDO = getenv(
-    "CHANNEL_SUDO", "YY5Y8"
+    "CHANNEL_SUDO", "xLxLxLrr3"
 )  # معرف قناتك بدون @
 
 YAFA_NAME = getenv(
-    "YAFA_NAME", "‹ سورس محمود ›"
+    "YAFA_NAME", "‹ سورس رنثون ›"
 )  # اسم قناتك
 
 YAFA_CHANNEL = getenv(
-   " YAFA_CHANNEL", "https://t.me/YY5Y8"
+   " YAFA_CHANNEL", "https://t.me/xLxLxLrr3"
 )  # رابط قناتك
 
 PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", "25"))
