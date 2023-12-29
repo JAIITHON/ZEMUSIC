@@ -3,7 +3,7 @@ from strings import get_command
 import asyncio
 from strings.filters import command
 from AlexaMusic import app
-from AlexaMusic.core.call import Yukki
+from AlexaMusic import app
 from AlexaMusic.utils.database import set_loop
 from AlexaMusic.utils.decorators import AdminRightsCheck
 from AlexaMusic.utils.database import is_muted, mute_on
