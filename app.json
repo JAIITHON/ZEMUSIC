@@ -30,7 +30,7 @@
       },
       "OWNER_ID": {
         "description": "حط ايدي المالك",
-        "value": "5012406813",
+        "value": "6186856384",
         "required": true
       },        
       "MONGO_DB_URI": {
@@ -40,7 +40,7 @@
           },
       "MUSIC_BOT_NAME": {
         "description": "اسم بوتك بالعربي",
-        "value": "محمود",
+        "value": "رنثون",
         "required": true
       },
       "STRING_SESSION": {
