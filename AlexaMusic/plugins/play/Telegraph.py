@@ -1,9 +1,10 @@
-import asyncio
-from pyrogram import Client, filters
 from AlexaMusic import app
-import random
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from telegraph import upload_file
+import os
 from strings.filters import command
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+
 
 @app.on_message(command(["تليجراف ميديا","ميديا","تليكراف ميديا"]))
 async def get_link_group(client, message):
