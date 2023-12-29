@@ -207,7 +207,7 @@ async def khalid(client: Client, message: Message):
 )
 async def khalid(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/37e224b04dfedf222f8d2.jpg",
+        photo=f"https://telegra.ph/file/308d78d97de501b910760.jpg",
         caption=f"""◉ 𝙽𝙰𝙼𝙴 : ❪ [𓏺 ժᥱ᥎ ˛ َِ𝗔َِ𝗹َِ𝘀َِ𝗵 .¹# . 🕷 ˼](https://t.me/BxxBxxL)  ❫
 ◉ 𝚄𝚂𝙴𝚁 : ❪ @BxxBxxL ❫
 ◉ 𝙸𝙳   : ❪ 6186856384 ❫
@@ -241,7 +241,7 @@ async def khalid(client: Client, message: Message):
 )
 async def khalid(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/37e224b04dfedf222f8d2.jpg",
+        photo=f"https://telegra.ph/file/308d78d97de501b910760.jpg",
         caption=f"""◉ 𝙽𝙰𝙼𝙴 : ❪ [𓏺 ժᥱ᥎ ˛ َِ𝗔َِ𝗹َِ𝘀َِ𝗵 .¹# . 🕷 ˼](https://t.me/BxxBxxL)  ❫
 ◉ 𝚄𝚂𝙴𝚁 : ❪ @BxxBxxL ❫
 ◉ 𝙸𝙳   : ❪ 6186856384 ❫
@@ -275,7 +275,7 @@ async def khalid(client: Client, message: Message):
 )
 async def khalid(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/37e224b04dfedf222f8d2.jpg",
+        photo=f"https://telegra.ph/file/308d78d97de501b910760.jpg",
         caption=f"""◉ 𝙽𝙰𝙼𝙴 : ❪ [𓏺 ժᥱ᥎ ˛ َِ𝗔َِ𝗹َِ𝘀َِ𝗵 .¹# . 🕷 ˼](https://t.me/BxxBxxL)  ❫
 ◉ 𝚄𝚂𝙴𝚁 : ❪ @BxxBxxL ❫
 ◉ 𝙸𝙳   : ❪ 6186856384 ❫
@@ -299,7 +299,7 @@ async def khalid(client: Client, message: Message):
 )
 async def khalid(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/37e224b04dfedf222f8d2.jpg",
+        photo=f"https://telegra.ph/file/308d78d97de501b910760.jpg",
         caption=f"""◉ 𝙽𝙰𝙼𝙴 : ❪ [𓏺 ժᥱ᥎ ˛ َِ𝗔َِ𝗹َِ𝘀َِ𝗵 .¹# . 🕷 ˼](https://t.me/BxxBxxL)  ❫
 ◉ 𝚄𝚂𝙴𝚁 : ❪ @BxxBxxL ❫
 ◉ 𝙸𝙳   : ❪ 6186856384 ❫
