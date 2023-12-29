@@ -20,7 +20,7 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 
-USER_OWNER = getenv("USER_OWNER","VL_VO")
+USER_OWNER = getenv("USER_OWNER","BxxBxxL")
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", "900"))
 
@@ -115,7 +115,7 @@ clean = {}
 autoclean = []
 
 START_IMG_URL = getenv(
-    "START_IMG_URL", "https://telegra.ph/file/d5bfeb3063904eb6b4aba.jpg"
+    "START_IMG_URL", "https://telegra.ph/file/02c2fdc88274c0fd5a0cb.jpg"
 )
 PING_IMG_URL = getenv(
     "PING_IMG_URL",
