@@ -201,7 +201,7 @@ async def khalid(client: Client, message: Message):
     & ~filters.edited
 )
 @app.on_message(
-     command(["مبرمج السورس","نادر"])
+     command(["مبرمج السورس","علش"])
     & filters.private
     & ~filters.edited
 )
@@ -259,12 +259,12 @@ async def khalid(client: Client, message: Message):
     )
 
 @app.on_message(
-     command(["صاحب السورس","صاحب السورس","نادرر","نادر"])
+     command(["صاحب السورس","صاحب السورس","علش","علوش"])
     & filters.group
     & ~filters.edited
 )
 @app.on_message(
-     command(["صاحب السورس","صاحب السورس","نادور","نادر"])
+     command(["صاحب السورس","صاحب السورس","علش","علوش"])
     & filters.channel
     & ~filters.edited
 )
@@ -293,7 +293,7 @@ async def khalid(client: Client, message: Message):
     )
 
 @app.on_message(
-     command(["المطور نادر","المبرمج نادر"])
+     command(["المطور علش","المبرمج علش"])
     & filters.group
     & ~filters.edited
 )
