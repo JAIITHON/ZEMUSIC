@@ -6,7 +6,7 @@ from AlexaMusic import app
 import random
     
 
-@app.on_message(command([f"شاعر", "شع", "ش", "{BOT_USERNAME} شعر"]))
+@app.on_message(command([f"شعر", "شع", "ش", "{BOT_USERNAME} شعر"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(8,20)
     url = f"https://t.me/saresnx/{rl}"
