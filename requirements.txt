@@ -20,6 +20,7 @@ speedtest-cli
 spotipy
 tgcrypto
 wget
+telegraph
 youtube-search
 youtube-search-python
 git+https://github.com/yt-dlp/yt-dlp.git
