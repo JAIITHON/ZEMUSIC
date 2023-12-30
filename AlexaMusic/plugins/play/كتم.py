@@ -4,7 +4,7 @@ from AlexaMusic import app
 from AlexaMusic import app
 
 
-admin, owner = ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER
+admin, owner = app.ADMINISTRATOR, app.OWNER
 muted = {}
 
 @app.on_message(filters.command("كتم", "") & filters.group & filters.reply)
