@@ -1,64 +1,147 @@
 import asyncio
+import pyrogram
 from pyrogram import Client, filters
-from AlexaMusic import app
-import random
+from strings import get_command
 from strings.filters import command
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-
-
-
-iddof = []
-@app.on_message(
-    command(["قفل الايدي","تعطيل الايدي"])
-    & filters.group
-    & ~filters.edited
-)
-async def iddlock(client, message):
-   get = await app.get_chat_member(message.chat.id, message.from_user.id)
-   if get.status in ["creator", "administrator"]:
-      if message.chat.id in iddof:
-        return await message.reply_text("تم معطل من قبل \n√")
-      iddof.append(message.chat.id)
-      return await message.reply_text("تم تعطيل الايدي بنجاح √")
-   else:
-      return await message.reply_text("لازم تكون ادمن \n√")
-
-@app.on_message(
-    command(["فتح الايدي","تفعيل الايدي"])
-    & filters.group
-    & ~filters.edited
-)
-async def iddopen(client, message):
-   get = await app.get_chat_member(message.chat.id, message.from_user.id)
-   if get.status in ["creator", "administrator"]:
-      if not message.chat.id in iddof:
-        return await message.reply_text("الايدي مفعل من قبل √")
-      iddof.remove(message.chat.id)
-      return await message.reply_text("تم فتح الايدي بنجاح √")
-   else:
-      return await message.reply_text("لازم تكون ادمن \n√")
+from AlexaMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
+from typing import Union
+from pyrogram.types import InlineKeyboardButton
+from config import LOG, LOG_GROUP_ID
+from AlexaMusic import app
+from AlexaMusic.utils.database import is_on_off
+from config import GITHUB_REPO, SUPPORT_CHANNEL, SUPPORT_GROUP
+from AlexaMusic import app
+from config import BANNED_USERS, MUSIC_BOT_NAME
+from AlexaMusic.misc import SUDOERS
+import re
+import sys
+import os
+import random
+from time import time
+from os import getenv
+from dotenv import load_dotenv
+from pyrogram import filters
 
 
 
 
-@app.on_message(
-    command(["ايدي","id","ا"])
-    & filters.group
-    & ~filters.edited
-)
-async def iddd(client, message):
-    if message.chat.id in iddof:
-      return
+load_dotenv()
+
+
+
+
+def get_file_id(msg: Message):
+
+    if msg.media:
+
+        for message_type in (
+
+            "photo",
+
+            "animation",
+
+            "audio",
+
+            "document",
+
+            "video",
+
+            "video_note",
+
+            "voice",
+
+            # "contact",
+
+            # "dice",
+
+            # "poll",
+
+            # "location",
+
+            # "venue",
+
+            "sticker",
+
+        ):
+
+            obj = getattr(msg, message_type)
+
+            if obj:
+
+                setattr(obj, "message_type", message_type)
+
+                return obj
+
+
+
+
+
+
+
+#@app.on_message(command(["ا"]) & filters.group &
+#async def khalid(client: Client, message: Message):
+    #usr = await client.get_users(message.from_user.id)
+    #name = usr.first_name
+    #async for photo in client.iter_profile_photos(message.from_user.id, limit=1):
+                    #await message.reply_photo(photo.file_id,       caption=f"""ᴜsᴇʀ -› {message.from_user.mention}\n𝘂𝘀𝗲𝗿𝗻𝗮𝗺𝗲 -› @{message.from_user.username}\nɪᴅ -› {message.from_user.id}\nbio » {bio}""", 
+        #reply_markup=InlineKeyboardMarkup(
+
+            #[
+
+                #[
+
+                    #InlineKeyboardButton(
+
+                        #name, url=f"https://t.me/{message.from_user.id}")
+
+                #],
+
+            #]
+
+        #),
+
+    #)
+
+@app.on_message(filters.regex("^ا$") & filters.group & SUDOERS)
+async def khalid(client: Client, message: Message):
+
     usr = await client.get_chat(message.from_user.id)
+
     name = usr.first_name
-    photo = await app.download_media(usr.photo.big_file_id)
-    await message.reply_photo(photo,       caption=f""" - ꪀᥲ️︎ꪔᥱ︎ :{message.from_user.mention}\n- u᥉ᥱ︎ɾ :@{message.from_user.username}\n- Ꭵძ . :{message.from_user.id}\nႦᎥ᥆ :{usr.bio}\nᥴ𝗁ᥲ️ƚ: {message.chat.title}\n𝚒𝚍 𝚐𝚛𝚘𝚞𝚋 :{message.chat.id}""", 
-    reply_markup=InlineKeyboardMarkup(
+
+    bio = usr.bio
+
+
+
+
+    async for photo in client.iter_profile_photos(message.from_user.id, limit=1):
+
+                    await message.reply_photo(photo.file_id,       caption=f"""**↯ : وفي النهاية أنتم السيئون وهم الأبرياء**
+            
+**↯ : اسمك : › {message.from_user.mention}**
+                    
+**↯ : معرفك : › @{message.from_user.username}**
+                    
+**↯ : ايديك : › `{message.from_user.id}`**
+                    
+**↯ : النبذه : › \n {bio}**""", 
+
+        reply_markup=InlineKeyboardMarkup(
+
             [
+
                 [
+
                     InlineKeyboardButton(
-                        name, url=f"https://t.me/{message.from_user.username}")
+
+                                            name, user_id=6186856384)
                 ],
+
             ]
+
         ),
-  )
+
+    )
+    
+    
