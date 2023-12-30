@@ -15,6 +15,39 @@ from AlexaMusic import app
 from random import  choice, randint
 
 
+
+@app.on_message(command(["غنيلي", "غني", "غنيلي. 🎙", "غنيي"]))
+async def ihd(client: Client, message: Message):
+    rl = random.randint(2,90)
+    url = f"https://t.me/gukygn/{rl}"
+    await client.send_voice(message.chat.id,url,caption="🐉 ¦ تـم اختيـار الاغـنـية لـك",parse_mode="html",
+    reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        message.from_user.first_name, url=f"https://t.me/{message.from_user.username}")
+                ],
+            ]
+        )
+    )
+
+
+@app.on_message(command(["صوره", "🕷", "صورهه", "صور"]))
+async def ihd(client: Client, message: Message):
+    rl = random.randint(2,50)
+    url = f"https://t.me/vnnkli/{rl}"
+    await client.send_photo(message.chat.id,url,caption="🐉 ¦ تـم اختيـار صوره لـك",parse_mode="html",
+    reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        message.from_user.first_name, url=f"https://t.me/{message.from_user.username}")
+                ],
+            ]
+        )
+    )
+
+
 @app.on_message(command(["انميي", "انمي"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(2,90)
@@ -29,6 +62,7 @@ async def ihd(client: Client, message: Message):
             ]
         )
     )
+
 
 @app.on_message(command(["متحركه. 🎬", "متحركه"]))
 async def ihd(client: Client, message: Message):
@@ -60,7 +94,22 @@ async def ihd(client: Client, message: Message):
         )
     )
 
-@app.on_message(command(["صور بنات", "افتار بنات"]))
+@app.on_message(command(["هيدرا", "هيدرات"]))
+async def ihd(client: Client, message: Message):
+    rl = random.randint(2,90)
+    url = f"https://t.me/flflfldld/{rl}"
+    await client.send_photo(message.chat.id,url,caption="🐉 ¦ تـم اختيـار هيدرات لـك",parse_mode="html",
+    reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        message.from_user.first_name, url=f"https://t.me/{message.from_user.username}")
+                ],
+            ]
+        )
+    )
+
+@app.on_message(command(["صور", "افتار بنات"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/vvyuol/{rl}"
@@ -105,6 +154,21 @@ async def ihd(client: Client, message: Message):
         )
     )
 
+@app.on_message(command(["الشيخ", "النقشبندي", "نقشبندي"]))
+async def ihd(client: Client, message: Message):
+    rl = random.randint(1,90)
+    url = f"https://t.me/ggcnjj/{rl}"
+    await client.send_voice(message.chat.id,url,caption="🥹♥ ¦ تـم اختيـار الشيخ نقشبندي لـك",parse_mode="html",
+    reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        message.from_user.first_name, url=f"https://t.me/{message.from_user.username}")
+                ],
+            ]
+        )
+    )
+
 @app.on_message(command(["فيلم", "فيلمك. 🎥"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(1,50)
@@ -120,7 +184,7 @@ async def ihd(client: Client, message: Message):
         )
     )
 
-@app.on_message(command(["استوري", "ستوريات. 🥹"]))
+@app.on_message(command(["استوري", "استوريهات. 🥹"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(1,50)
     url = f"https://t.me/yoipopl/{rl}"
