@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram.enums import ChatMemberStatus
+from AlexaMusic import app
 from AlexaMusic import app
 
 
