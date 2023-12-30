@@ -3,7 +3,7 @@ from AlexaMusic import app
 import asyncio
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
-from AlexaMusic.core.call import Yukki
+from AlexaMusic import app
 from AlexaMusic.utils.database import *
 from pytgcalls.exceptions import (NoActiveGroupCall,TelegramServerError,AlreadyJoinedError)
 
