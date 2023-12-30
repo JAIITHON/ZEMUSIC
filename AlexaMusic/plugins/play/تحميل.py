@@ -19,7 +19,7 @@ from youtubesearchpython import VideosSearch
 from yt_dlp import YoutubeDL
 from AlexaMusic import app as Client
 
-from AlexaMusic import app
+from AlexaMusic.plugins.play.filters import command, app
 def remove_if_exists(path):
     if os.path.exists(path):
         os.remove(path)
