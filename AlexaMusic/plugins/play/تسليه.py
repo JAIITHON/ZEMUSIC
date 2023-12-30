@@ -2,117 +2,89 @@ import asyncio
 from pyrogram import Client, filters
 from strings import get_command
 from strings.filters import command
-from AlexaMusic.utils.decorators import AdminActual
-from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    ReplyKeyboardMarkup,
-    ReplyKeyboardRemove,
-    InputMediaPhoto,
-    Message,
-)
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, ReplyKeyboardMarkup
 from AlexaMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 
 
-REPLY_MESSAGE = "**اليك اوامر التسلية **"
 
-
-
+REPLY_MESSAGE = "**اليك اوامر التسلية**"
 
 REPLY_MESSAGE_BUTTONS = [
-
-         [
-
-             ("‹ غنيلي ›"),                   
-
-             ("‹ متحركه ›")
-
-
-
-
-          ],
-
-          [
-
-             ("‹ اقتباسات ›"),
-
-             ("‹ اسمي ›")
-
-          ],
-
-          [
-              
-             ("━━━━━━━━━━━━"),
-              
-          ],
-
-          [
-              
-              ("‹ لو خيروك ›"),                   
-
-             ("‹ كت تويت ›")
-              
-          ],
-
-          [ 
-              
-              ("‹ فيلم ›"),                   
-
-             ("‹ صراحه ›")
-
-          ],
-
-          [
-              
-             ("━━━━━━━━━━━━"),
-              
-          ],
-
-          [ 
-
-             ("‹ انمي ›"),
-
-             ("‹ صور ›")
-
-          ],
-
-          [
-
-             ("‹ ستوريات ›"),
-
-             ("‹ قصائد ›")
-
-          ],
-
-          [
-              
-             ("━━━━━━━━━━━━"),
-
-          ],
-
-          [
-
-             ("‹ هيدرات ›"),
-
-             ("‹ قران ›")
-
-          ],
-
-          [
-     
-             ("الاوامر")
-
-          ]
-
+    [
+        ("السورس"),
+    ],
+    [
+        ("افتار شباب"),
+        ("افتار بنات")
+    ],
+    [
+        ("استوريهات. 🥹")
+    ],
+    [
+        ("النقشبندي"),
+        ("قران")
+    ],
+    [
+        ("فيلمك. 🎥")
+    ],
+    [
+        ("اقتباسات"),
+        ("هيدرات")
+    ],
+    [
+        ("غنيلي. 🎙")
+    ],
+    [
+        ("صوره"),
+        ("انميي")
+    ],
+    [
+        ("متحركه. 🎬")
+    ],
+    [
+        ("تويت"),
+        ("صراحه")
+    ],
+    [
+        ("الالعاب. 🐰")
+    ],
+    [
+        ("نكته"),
+        ("كتبات")
+    ],
+    [
+        ("اذكار. 💎")
+    ],
+    [
+        ("حساب العمر"),
+        ("ابراج")
+    ],
+    [
+        
+        
+    ],
+    [
+        ("لو خيروك"),
+        ("انصحني")
+    ],
+    [
+        ("بوت حذف")
+        
+    ],
+    [
+        ("حساب العمر"),
+        ("ابراج")
+    ],
+    [
+       ("انصحني. 🥲")
+        
+    ],
+    [
+        ("اخفاء الازرار . 🕷")
+    ]
 ]
 
-
-
-
-  
-
-@app.on_message(filters.regex("^‹ اوامر التسليه ›$"))
+@app.on_message(filters.regex("^/AFYN"))
 async def cpanel(_, message: Message):             
         text = REPLY_MESSAGE
         reply_markup = ReplyKeyboardMarkup(REPLY_MESSAGE_BUTTONS, resize_keyboard=True, selective=True)
@@ -121,24 +93,23 @@ async def cpanel(_, message: Message):
               reply_markup=reply_markup
         )
 
-@app.on_message(filters.regex("اخفاء الازرار") & filters.group)
+@app.on_message(filters.regex("^اخفاء الازرار . 🕷$"))
 async def down(client, message):
-          m = await message.reply("**- بخدمتك حجي خفيت الازرار\n- اذا تريد تطلعها مرة ثانية اكتب الاوامر**", reply_markup= ReplyKeyboardRemove(selective=True))
+          m = await message.reply(" **- تم اخفاء الازرار بنجاح . 🐰\n\n- لاظهار كيب الارشادات /ARN   \n. 🕷**\n\n- لاظهار كيب الاعضاء والتسليه  /AFYN  \n. 🕷**", reply_markup= ReplyKeyboardRemove(selective=True))
 
 
-@app.on_message(filters.group & command("طريقة ربط القنوات"))
-async def dowhmo(client: Client, message: Message):
-    await message.reply_text("""- هلا والله\n◌**عشان تشغل بالقنوات لازم تسوي بعض الخطوات وهي◌** :\n\n1 -› تدخل البوت قناتك وترفعه مشرف\n2 -› ترجع للقروب وتكتب { **ربط + يوزر القناة** }\n3 -› **اضغط على زر اوامر التشغيل عشان تعرف كيف تشغل**..""",
+
+@app.on_message(filters.regex("يـوتيوب. 📽"))
+def reply_to_HEY(Client, message):
+    message.reply_photo(
+        photo=f"https://telegra.ph/file/9082f22163efb73912bab.jpg",
+        caption=f"""**يتم استخدام هذا الامر لعرض تحميل من اليوتيوب**\n**استخدم الامر بهذا الشكل** `تنزيل` ** او ** `يوتيوب` ** كمثل تنزيل سوره الرحمن اضغط علي الامر لنسخ والاستخدام**""",
         reply_markup=InlineKeyboardMarkup(
             [
-                [
-                    InlineKeyboardButton(
-                        "", url=f"https://t.me/BxxBxxL"),
-                ],[
-                    InlineKeyboardButton(
-                        "• ضيفني لقروبك 🎻", url=f"https://t.me/NKQbot?startgroup=true"),
-                ],
+            [
+                InlineKeyboardButton("᥉᥆υᖇᥴᥱ ᥲ️ᖇꪀ᥆ρ", url=f"https://t.me/N_G_12"),
             ]
-        ),
-        disable_web_page_preview=True
-                            )
+         ]
+     )
+  )
+
