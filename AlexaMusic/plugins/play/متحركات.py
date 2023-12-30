@@ -109,7 +109,7 @@ async def ihd(client: Client, message: Message):
         )
     )
 
-@app.on_message(command(["صور", "افتار بنات"]))
+@app.on_message(command(["صور", "صور بنات"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/vvyuol/{rl}"
@@ -124,7 +124,7 @@ async def ihd(client: Client, message: Message):
         )
     )
 
-@app.on_message(command(["صور شباب", "افتار شباب"]))
+@app.on_message(command(["صور شباب", "صور شباب"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/vgbmm/{rl}"
@@ -169,7 +169,7 @@ async def ihd(client: Client, message: Message):
         )
     )
 
-@app.on_message(command(["فيلم", "فيلمك. 🎥"]))
+@app.on_message(command(["فيلم", "افلام. 🎥"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(1,50)
     url = f"https://t.me/gyigkk/{rl}"
@@ -184,7 +184,7 @@ async def ihd(client: Client, message: Message):
         )
     )
 
-@app.on_message(command(["استوري", "استوريهات. 🥹"]))
+@app.on_message(command(["استوري", "ستوريات. 🥹"]))
 async def ihd(client: Client, message: Message):
     rl = random.randint(1,50)
     url = f"https://t.me/yoipopl/{rl}"
