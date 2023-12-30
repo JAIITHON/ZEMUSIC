@@ -65,7 +65,7 @@ InlineKeyboardButton(" member keyboard ", callback_data="Q_XUQ"),
                 ],
                 [                
                     InlineKeyboardButton(" Commands", callback_data="cbcmds"),
-                    InlineKeyboardButton(" Donate ", url=f"https://t.me/H_M_Dr"),
+                    InlineKeyboardButton(" Donate ", url=f"https://t.me/xLxLxLrr3"),
                 ],
                 [
                     InlineKeyboardButton(
