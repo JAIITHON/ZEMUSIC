@@ -8,18 +8,20 @@ from AlexaMusic import app
 import re
 import sys
 
-@app.on_message(command("رفع رقاصه"))
-async def yasooo(client, message):
-    try:
-        
-        excluded_user_id = 6186856384
-        if message.reply_to_message.from_user.id == excluded_user_id:
-            await message.reply_text("ما تكدر ترفع المبرمج ركاصه يالحيوان .")
-        else:
-            if message.reply_to_message.from_user.mention not in raqsa:
-                raqsa.append(message.reply_to_message.from_user.mention)
-            await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n رقاصه واحد يذب فلوس عليها 😂💃")
-    except Exception as e:
-        await message.reply_text(f"حدث خطأ: {e}")
+from pyrogram import Client, filters
+
+app = Client("my_account")
 
 
+exception_username = "6186856384"
+
+@app.on_message(filters.command("رفع_زاحف"))
+async def lift_crawler(client, message):
+    if message.reply_to_message.from_user.is_bot:
+        await message.reply_text("لا يمكن رفع الزواحف!")
+    elif message.reply_to_message.from_user.username == exception_username:
+        await message.reply_text(f"لا يمكن رفع {exception_username}!")
+    else:
+        await message.reply_text(f"تم رفع الزاحف {message.reply_to_message.from_user.mention}!")
+
+app.run()
