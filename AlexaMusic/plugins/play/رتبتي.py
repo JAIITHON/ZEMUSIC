@@ -1,4 +1,4 @@
-from pyrogram.enums import ChatMemberStatus
+from pyrogram.enums import app
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from AlexaMusic import app
