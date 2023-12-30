@@ -101,7 +101,7 @@ REPLY_MESSAGE_BUTTONS = [
 
           [
      
-             ("اخفاء الازرار")
+             ("الاوامر")
 
           ]
 
@@ -123,20 +123,20 @@ async def cpanel(_, message: Message):
 
 @app.on_message(filters.regex("اخفاء الازرار") & filters.group)
 async def down(client, message):
-          m = await message.reply("**- تم اخفاء الازرار بنجاح**", reply_markup= ReplyKeyboardRemove(selective=True))
+          m = await message.reply("**- بخدمتك حجي خفيت الازرار\n- اذا تريد تطلعها مرة ثانية اكتب الاوامر**", reply_markup= ReplyKeyboardRemove(selective=True))
 
 
-@app.on_message(filters.group & command("."))
+@app.on_message(filters.group & command("طريقة ربط القنوات"))
 async def dowhmo(client: Client, message: Message):
-    await message.reply_text("""[تحديثات بلاك 🧚](https://t.me/H_M_Dr)""",
+    await message.reply_text("""- هلا والله\n◌**عشان تشغل بالقنوات لازم تسوي بعض الخطوات وهي◌** :\n\n1 -› تدخل البوت قناتك وترفعه مشرف\n2 -› ترجع للقروب وتكتب { **ربط + يوزر القناة** }\n3 -› **اضغط على زر اوامر التشغيل عشان تعرف كيف تشغل**..""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "", url=f"https://t.me/H_M_Dr"),
+                        "", url=f"https://t.me/BxxBxxL"),
                 ],[
                     InlineKeyboardButton(
-                        "", url=f"https://t.me/NKQbot?startgroup=true"),
+                        "• ضيفني لقروبك 🎻", url=f"https://t.me/NKQbot?startgroup=true"),
                 ],
             ]
         ),
