@@ -1,991 +1,722 @@
-import json
-import random
-from typing import List, Union
-import time
-from pyrogram import filters
-import datetime
 from AlexaMusic import app
 from pyrogram import Client, filters
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-SUDOERS = [6581896306]
-
-OWNER_ID = 6581896306
-
-def is_sudoer(_, __, message):
-
-    return message.from_user.id in SUDOERS or message.from_user.id == OWNER_ID
-
-def is_owner(_, __, message):
-
-    return message.from_user.id == OWNER_ID
-
-
-other_filters = filters.group &  ~filters.via_bot & ~filters.forwarded
-other_filters2 = (
-    filters.private &  ~filters.via_bot & ~filters.forwarded
-)
-
-
-def command(commands: Union[str, List[str]]):
-    return filters.command(commands, "")
-
-
-def load_bank_data():
-    try:
-        with open('bank_tom.json', 'r') as file:
-            bank_data = json.load(file)
-    except FileNotFoundError:
-        bank_data = {}
-    
-    return bank_data
-
-
-def save_bank_data(bank_data):
-    with open('bank_tom.json', 'w') as file:
-        json.dump(bank_data, file)
-
-
-cooldown_time = 12 * 60 * 60  
-
-
-def check_cooldown(user_id):
-    cooldown_data = load_cooldown_data()
-    current_time = int(time.time())
-    if str(user_id) in cooldown_data:
-        last_use_time = cooldown_data[str(user_id)]
-        time_passed = current_time - last_use_time
-        remaining_time = cooldown_time - time_passed
-
-        if time_passed < cooldown_time:
-            hours = remaining_time // 3600
-            minutes = (remaining_time % 3600) // 60
-            response = f"عذرًا، يجب الانتظار {hours} ساعة و {minutes} دقيقة قبل استخدام الكنز مرة أخرى"
-            return False, response
-
-    cooldown_data[str(user_id)] = current_time
-    save_cooldown_data(cooldown_data)
-    return True, None
-
-
-def load_cooldown_data():
-    try:
-        with open('cooldown_data.json', 'r') as file:
-            cooldown_data = json.load(file)
-    except FileNotFoundError:
-        cooldown_data = {}
-    
-    return cooldown_data
-
-
-def save_cooldown_data(cooldown_data):
-    with open('cooldown_data.json', 'w') as file:
-        json.dump(cooldown_data, file)
-
-
-
-
-def get_remaining_time(user_id):
-    cooldown_data = load_cooldown_data()
-    current_time = int(time.time())
-    if str(user_id) in cooldown_data:
-        last_use_time = cooldown_data[str(user_id)]
-        remaining_time = 20 * 60 - (current_time - last_use_time)
-        if remaining_time < 0:
-            remaining_time = 0
-        return remaining_time
-    return 0
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-LUCK_COOLDOWN = 1200  
-
-
-last_luck_times = {}
-
-
-def get_luck_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_luck_times:
-        last_luck_time = last_luck_times[user_id]
-        elapsed_time = current_time - last_luck_time
-        remaining_time = LUCK_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_luck_time(user_id):
-    last_luck_times[user_id] = int(time.time())
-    
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-TRANSFER_COOLDOWN = 1200  
-
-
-last_transfer_times = {}
-
-def get_transfer_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_transfer_times:
-        last_transfer_time = last_transfer_times[user_id]
-        elapsed_time = current_time - last_transfer_time
-        remaining_time = TRANSFER_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_transfer_time(user_id):
-    last_transfer_times[user_id] = int(time.time())
-
-
-
-@app.on_message(command('تحويل'))
-def transfer(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_transfer_remaining_time(user_id)
-        if remaining_time <= 0:
-            args = message.text.split(' ')
-            if len(args) == 2 and args[1].isdigit():
-                amount = int(args[1])
-                if amount <= bank_data['accounts'][str(user_id)]['balance']:
-                    client.send_message(message.chat.id, f'تم تحويل {amount} دولار بنجاح')
-                    update_transfer_time(user_id)
-                else:
-                    client.send_message(message.chat.id, 'رصيدك الحالي غير كافي')
-            else:
-                client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: تحويل + المبلغ')
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقيقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('استثمار'))
-def invest(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_remaining_time(user_id)
-        if remaining_time <= 0:
-            args = message.text.split(' ')
-            if len(args) == 2 and args[1].isdigit():
-                amount = int(args[1])
-                if amount <= bank_data['accounts'][str(user_id)]['balance']:
-                    bank_data['accounts'][str(user_id)]['balance'] -= amount
-                    save_bank_data(bank_data)
-                    # قم بتنفيذ الاستثمار وحساب العائد المحتمل
-                    return_amount = amount * random.randint(50, 100) / 100
-                    bank_data['accounts'][str(user_id)]['balance'] += return_amount
-                    save_bank_data(bank_data)
-                    cooldown_data = load_cooldown_data()
-                    cooldown_data[str(user_id)] = int(time.time())
-                    save_cooldown_data(cooldown_data)
-                    client.send_message(message.chat.id, f'تهانينا! لقد استثمرت {amount} دولار وحصلت على عائد بقيمة {return_amount} دولار')
-                else:
-                    client.send_message(message.chat.id, 'رصيدك الحالي غير كافي')
-            else:
-                client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: استثمار + المبلغ')
-        else:
-            remaining_minutes = int(remaining_time / 60)
-            remaining_seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {remaining_minutes} دقيقة و {remaining_seconds} ثانية بين كل عملية استثمار')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-@app.on_message(command('حظ'))
-def luck(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_luck_remaining_time(user_id)
-        if remaining_time <= 0:
-            args = message.text.split(' ')
-            if len(args) == 2 and args[1].isdigit():
-                amount = int(args[1])
-                if amount <= bank_data['accounts'][str(user_id)]['balance']:
-                    bank_data['accounts'][str(user_id)]['balance'] -= amount
-                    save_bank_data(bank_data)
-                    chance = random.randint(0, 1)
-                    if chance == 1:
-                        win_amount = amount * random.uniform(1, 3)
-                        bank_data['accounts'][str(user_id)]['balance'] += win_amount
-                        save_bank_data(bank_data)
-                        client.send_message(message.chat.id, f'تهانينا! لقد ربحت {win_amount} دولار')
-                    else:
-                        client.send_message(message.chat.id, 'للأسف، لم تربح أي شيء')
-                    update_luck_time(user_id)
-                else:
-                    client.send_message(message.chat.id, 'رصيدك الحالي غير كافي')
-            else:
-                client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: حظ + المبلغ')
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقيقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-@app.on_message(command("اضف") & filters.create(is_sudoer))
-def add_money(client, message):
-    reply_message = message.reply_to_message
-    if reply_message is not None and reply_message.from_user is not None:
-        user_id = reply_message.from_user.id
-        args = message.text.split(" ")
-        if len(args) == 2 and args[1].isdigit():
-            amount = int(args[1])
-            bank_data = load_bank_data()
-
-            if 'accounts' not in bank_data:
-                bank_data['accounts'] = {}
-
-            if str(user_id) in bank_data['accounts']:
-                bank_data['accounts'][str(user_id)]['balance'] += amount
-            else:
-                bank_data['accounts'][str(user_id)] = {'balance': amount}
-
-            save_bank_data(bank_data)
-            client.send_message(message.chat.id, f'تمت إضافة {amount} فلوس للمستخدم {user_id}')
-        else:
-            client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: اضف + المبلغ')
-    else:
-        client.send_message(message.chat.id, 'الرجاء الرد على شخص لإضافة الفلوس له')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-@app.on_message(command("حذف حسابه") & filters.create(is_sudoer))
-def delete_account(client, message):
-    reply_message = message.reply_to_message
-    if reply_message is not None and reply_message.from_user is not None:
-        user_id = reply_message.from_user.id
-        bank_data = load_bank_data()
-
-        if str(user_id) in bank_data['accounts']:
-            del bank_data['accounts'][str(user_id)]
-            save_bank_data(bank_data)
-            client.send_message(message.chat.id, f'تم حذف حساب المستخدم {user_id}')
-        else:
-            client.send_message(message.chat.id, 'المستخدم المحدد لا يملك حساب بنكي')
-    else:
-        client.send_message(message.chat.id, 'الرجاء الرد على شخص لحذف حسابه')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('حذف') & filters.create(is_sudoer))
-def delete_specific_account(client, message):
-    args = message.text.split(' ')
-    if len(args) == 2 and args[1].isdigit():
-        user_id = args[1]
-        bank_data = load_bank_data()
-
-        if str(user_id) in bank_data['accounts']:
-            del bank_data['accounts'][str(user_id)]
-            save_bank_data(bank_data)
-            client.send_message(message.chat.id, f'تم حذف حساب المستخدم {user_id}')
-        else:
-            client.send_message(message.chat.id, 'المستخدم المحدد لا يملك حساب بنكي')
-    else:
-        client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: حذف_حساب + اليوزر')
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('تصفير البنك') & filters.create(is_sudoer))
-def reset_bank(client, message):
-    bank_data = {'accounts': {}}
-    save_bank_data(bank_data)
-    client.send_message(message.chat.id, 'تم مسح جميع حسابات البنك')
-    
-    
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('فتح لعبة البنك') & filters.create(is_sudoer))
-def enable_bank_game(client, message):
-    chat_id = message.chat.id
-    bank_data = load_bank_data()
-
-    if 'game_enabled' in bank_data:
-        client.send_message(chat_id, 'لعبة البنك مفعلة بالفعل في المجموعة')
-    else:
-        bank_data['game_enabled'] = True
-        save_bank_data(bank_data)
-        client.send_message(chat_id, 'تم تفعيل لعبة البنك في المجموعة')
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('قفل لعبة البنك') & filters.create(is_sudoer))
-def disable_bank_game(client, message):
-    chat_id = message.chat.id
-    bank_data = load_bank_data()
-
-    if 'game_enabled' in bank_data:
-        del bank_data['game_enabled']
-        save_bank_data(bank_data)
-        client.send_message(chat_id, 'تم إيقاف لعبة البنك في المجموعة')
-    else:
-        client.send_message(chat_id, 'لعبة البنك معطلة بالفعل في المجموعة')
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('انشاء حساب بنكي'))
-def create_account(client, message):
-    user_id = message.from_user.id
-    username = message.from_user.username
-    bank_data = load_bank_data()
-    account_number = random.randint(100000000000000, 999999999999999)
-    if 'accounts' not in bank_data:
-        bank_data['accounts'] = {}
-    
-    if str(user_id) in bank_data['accounts']:
-        client.send_message(message.chat.id, 'لديك بالفعل حساب بنكي')
-    else:
-        bank_data['accounts'][str(user_id)] = {
-            'username': username,
-            'balance': 50,
-            'account_number': account_number,
-            'thief': 0
-        }
-        save_bank_data(bank_data)
-        client.send_message(message.chat.id, 'تم إنشاء حساب بنكي بنجاح اكتب بنكي لترى حسابك 😇')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-@app.on_message(command('فلوسي'))
-def check_balance(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-    
-    if str(user_id) in bank_data['accounts']:
-        balance = bank_data['accounts'][str(user_id)]['balance']
-        client.send_message(message.chat.id, f'رصيدك الحالي هو: {balance} دولار')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-@app.on_message(command('فلوسه'))
-def check_user_balance(client, message):
-    reply = message.reply_to_message
-    if reply:
-        user_id = reply.from_user.id
-        bank_data = load_bank_data()
+from pyrogram.types import Message, CallbackQuery
+from pyrogram.types import InlineKeyboardMarkup as mk, InlineKeyboardButton as btn
+from kvsqlite.sync import Client as DB
+import random, datetime
+
+db = DB("usess.hex")
+
+rdod = ["بوت", "كارولين", "بووت", "بوتي", "البوت"]
+sudo = [6581896306]#ADMIN
+
+
+@app.on_message(filters.text)
+async def groups(_: Client, message: Message):
+    fid, mid, cid, t = message.from_user.id, message.id, message.chat.id, message.text
+    db.cleanex()
+    if t.startswith("makecode "):
+        amount = None
+        try:
+            amount = int(t.split("makecode ")[1])
+        except:
+            await message.reply("An error occurred.")
+            return
+        if fid not in sudo:
+            return
+        code = "".join(random.choice("ABCasync defGHIJKLMNOQRSEOPWXYZabcasync defghijklmnoqrseowxyz1234567890") for i in range(12))
+        db.set(f"code_{code}", amount)
+        await message.reply(f"Promo code has been created:\nCode: <code>{code}</code> .\nAmount: {amount} .")
+        return
+    if message.chat.type == "private": return
+    if db.get(f"trans_{message.from_user.id}"):
+        id = None
+        amount = db.get(f"trans_{message.from_user.id}")
+        try:
+            id = int(message.text)
+        except:
+            await message.reply("الايدي لازم يكون رقماً.")
+            return
         
-        if str(user_id) in bank_data['accounts']:
-            balance = bank_data['accounts'][str(user_id)]['balance']
-            client.send_message(message.chat.id, f'رصيد {reply.from_user.username} هو: {balance} دولار')
+        if id == message.from_user.id:
+            print(id)
+            return
+        ud = db.get(f"user_{id}")
+        d = db.get(f"user_{message.from_user.id}")
+        if not ud:
+            await message.reply("↯ ماعندة حساب بنكي .")
+            return 
+        ud["balance"] += amount
+        d["balance"] -= amount
+        db.set(f"user_{id}", ud)
+        db.delete(f"trans_{message.from_user.id}")
+        db.set(f"user_{message.from_user.id}", d)
+        xmsg = f"""
+سويت حوالة بقيمه: {amount} ريبوكوين، من {message.from_user.id} الى {id}  .
+    """ 
+        await message.reply(xmsg)
+        return
+        try:
+            xmsg = f"""
+وصلتلك حوالة بقيمه: {amount} ريبوكوين، من {message.from_user.id} الى {id} ( الك ) .
+        """
+            await app.send_message(chat_id=int(id), text=xmsg)
+            return
+        except: return
+    if db.get(f"user_{fid}"):
+        name = message.from_user.first_name
+        print(name)
+        d = db.get(f"user_{fid}")
+        d['name'] = name
+        db.set(f"user_{fid}", d)
+    if t == "انشاء حساب بنكي" or t == "انشاء حساب بنك":
+        if not db.get(f"user_{fid}"):
+            banks = ["البنك العفطي", "بنك تراكوس الدولي", "بنك باترك بيتمن"]
+            keys = mk([
+                [btn("بنك باترك بيتمن", callback_data=f"bank-patrick-{fid}")],
+                [btn("بنك العرب", callback_data=f"bank-arab-{fid}"),
+                 btn("بنك تراكوس", callback_data=f"bank-trakos-{fid}")]
+            ])
+            
+            await message.reply("اوكيه، اختار بنك لحسابك؟", reply_markup=keys)
+            return
         else:
-            client.send_message(message.chat.id, f'المستخدم {reply.from_user.username} ليس لديه حساب بنكي')
-    else:
-        client.send_message(message.chat.id, 'الرجاء الرد على رسالة المستخدم للحصول على معلومات الحساب')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-@app.on_message(command('بنكي'))
-def view_account(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
+            await message.reply("عندك حساب بنكي!")
+            return
+    if t == "حسابي":
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        id, balance, bankn, haram = d["id"], int(d["balance"]), d["bank"], d["haram"]
+        await message.reply(f"↯ معلومات حسابك البنكي:\n↯ فلوسك ⦗ {balance} ⦘ ريبوكوين .\n↯ فلوس الحرام ⦗ {haram} ⦘ ريبوكوين .\n↯ ايديك ⦗<strong> {id} </strong> ⦘ .\n↯ البنك <strong>⦗ {bankn} ⦘ </strong> .")
+        return
+    if t in rdod:
+        l = """
+شتريد؟
+نعم؟
+ها؟
+عيني
+عيوني
+هاحبيبي؟
+صحتني؟
+يمك؟
+وجع.
+        """.split()
+        await message.reply(text=random.choice(l))
+        return
+    tops = """
+تو
+ت
+تب
+    """.split()
+    flos = """
+فل
+ف
+لوس
+فلو
+    """.split()
+    tops_ = """
+تف
+    """.split()
+    tops__ = """
+تح
+    """
+    if t in tops:
+        t = "توب"
+    if t in flos:
+        t = "فلوس"
+    if t in tops_:
+        t = "توب الفلوس"
+    if t in tops__:
+        t = "توب الحراميه"
+    if t == "توب":
+        keys = mk([
+            [btn("توب الفلوس", callback_data=f"tpfls-{fid}"),
+             btn("توب الحرامية", callback_data=f"haram-{fid}")],
+            [btn("اخفاء", callback_data=f"hide-{fid}")]
+        ])
+        await message.reply("اهلا بيك بقائمة التوب..", reply_markup=keys)
+        return
+    if t == "فلوس" or t == "فلوسي":
+        id = None
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if message.reply_to_message:
+            id = message.reply_to_message.from_user.id
+        else:
+            id = fid
+        d = db.get(f"user_{id}")
+        if not d:
+            await message.reply("↯ ماعندة حساب بنكي .")
+            return
+        balance, haram= int(d["balance"]), int(d["haram"])
+        await message.reply(f"↯ معلومات أموالك:\n↯ فلوس البنك ⦗ {balance} ⦘ ريبوكوين .\n↯ فلوس الحرام ⦗ {haram} ⦘ ريبوكوين .")
+    if t == "بخشيش":
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if not db.get(f"tip_{fid}"):
+            r = random.randint(102, 1600)
+            d["balance"] +=int(r)
+            db.set(f"user_{fid}", d)
+            db.setex(f"tip_{fid}", 600, True)
+            await message.reply(f"تبشر.. عطيتك {r} ريبوكوين .")
+            return
+        else:
+            seconds = db.ttl(f"tip_{fid}")
+            time = datetime.timedelta(seconds=seconds)
+            ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+            await message.reply(f"انت أخذت بخشيش.. تعال بعد: {ftime} دقيقة.")
+            return
     
-    if str(user_id) in bank_data['accounts']:
-        username = bank_data['accounts'][str(user_id)]['username']
-        balance = bank_data['accounts'][str(user_id)]['balance']
-        account_number = bank_data['accounts'][str(user_id)]['account_number']
-        client.send_message(message.chat.id, f'حسابك البنكي:\nالمستخدم: {username}\nالرصيد: {balance} دولار\nرقم الحساب : {account_number}')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-@app.on_message(command('بنكه'))
-def view_user_account(client, message):
-    reply = message.reply_to_message
-    if reply:
-        user_id = reply.from_user.id
-        bank_data = load_bank_data()
+    if t.startswith("اكشط "):
+        code = None
+        try:
+            code = t.split("اكشط ")[1]
+        except:
+            await message.reply("الكود خطأ ")
+            return
+        if not db.exists(f"code_{code}"):
+            await message.reply("الكود مو فعال، او مموجود .")
+            return
+        d = db.get(f"code_{code}")
+        user = db.get(f"user_{fid}")
+        user["balance"] += int(d)
+        db.set(f"user_{fid}", user)
+        await message.reply(f"مبروووك! كشطت الكود وطلعلك {d} ريبوكوين! ")
+        db.delete(f"code_{code}")
+        return
+    if t == "راتب":
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if not db.get(f"salary_{fid}"):
+            r = random.randint(1102, 16000)
+            d["balance"] +=int(r)
+            db.set(f"user_{fid}", d)
+            db.setex(f"salary_{fid}", 500, True)
+            nowm = d["balance"]
+            job = random.choice(["عامل بناء", "عامل مصنع", "ممثل اباحي", "ممثل افلام", "مبرمج" ,"كواد", "مطور" , "لاجئ سوري"])
+            await message.reply(f"↯ الراتب وصل!\n↯ المبلغ ( {r} ) ريبوكوين .\n↯ المُهنة ( {job} ) .\n↯ فلوسك صارت ( {nowm} ) ريبوكوين .")
+            return
+        else:
+            seconds = db.ttl(f"salary_{fid}")
+            print(seconds)
+            time = datetime.timedelta(seconds=seconds)
+            ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+            await message.reply(f"انت أخذت راتب .. تعال بعد: {ftime} دقيقة.")
+            return
+    if t  == "حظ":
+        await message.reply("علمود تلعب الحظ ارسل كذا:\nحظ المبلغ")
+        return
+    if t.startswith("حظ "):
+        amount = None
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if db.get(f"luck_{fid}"):
+            seconds = db.ttl(f"luck_{fid}")
+            time = datetime.timedelta(seconds=seconds)
+            ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+            await message.reply(f"انت لعبت الحظ .. تعال بعد: {ftime} دقيقة.")
+            return
+        try:
+            amount = int(t.split("حظ ")[1])
+        except:
+            await message.reply("لازم تخلي رقم، مو نص..")
+            return
+        if d["balance"] < amount:
+            await message.reply(f"فلوسك ماتكفي.. ")
+            return
+        if amount < 250:
+            await message.reply("اقصى حد للعب هو 250 ريبوكوين.")
+            return
+        chance = random.choice([0, 1])
+        if chance == 1:
+            backthen = int(d["balance"])
+            final = amount * 2 + d["balance"]
+            d["balance"] +=int(final)
+            db.set(f"user_{fid}", d)
+            final = int(final)
+            await message.reply(f"مبرووك! فزت بالحظ!\n↯ فلوسك قبل ( {backthen} ) ريبوكوين .\n↯ فلوسك الان ( {final} ) ريبوكوين .")
+            db.setex(f"luck_{fid}", 600, True)
+            return
+        if chance == 0:
+            d["balance"] -=amount
+            db.set(f"user_{fid}", d)
+            await message.reply(f"↯ للأسف.. خسرت بالحظ 😢\n↯ فلوسك صارت ( {d['balance']} ) ريبوكوين .")
+            db.setex(f"luck_{fid}", 600, True)
+            return
+    if t == "استثمار":
+        await message.reply("علمود تلعب الاستثمار:\nاستثمار المبلغ")
+        return
+    if t.startswith("استثمار "):
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if db.get(f"invest_{fid}"):
+            seconds = db.ttl(f"invest_{fid}")
+            time = datetime.timedelta(seconds=seconds)
+            ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+            await message.reply(f"انت لعبت الاستثمار .. تعال بعد: {ftime} دقيقة.")
+            return
+        amount = None
+        try:
+            amount = int(t.split("استثمار ")[1])
+        except:
+            await message.reply("المبلغ لازم يكون رقم .")
+            return
+        if amount < 200:
+            await message.reply("↯ اقل مبلغ للاستثمار هو 250 ريبوكوين .")
+            return
+        pc = random.randint(0, 14)
+        if pc == 0:
+            await message.reply("حظ اوفر نسبة الربح 0% .")
+            db.setex(f"invest_{fid}", 1200, True)
+            return
+        final = amount * 3 / pc * 2 / 1.5
+        if final:
+            d["balance"] += int(final)
+            final = int(final)
+            db.set(f"user_{fid}", d)
+            await message.reply(f"↯ استثمار ناجح!\n↯ نسبة ربحك {pc}%\n↯ مبلغ الربح ( {final} ) ريبوكوين!\n↯ فلوسك الان ( {int(d['balance'])} ) ريبوكوين! ")
+            db.setex(f"invest_{fid}", 1200, True)
+    if t == "مضاربة" or t == "مضاربه":
+        await message.reply("علمود تلعب المضاربة استعمل كذا:\nمضاربه المبلغ")
+        return
+    if t.startswith("مضاربه "):
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if db.get(f"updown_{fid}"):
+            seconds = db.ttl(f"updown_{fid}")
+            time = datetime.timedelta(seconds=seconds)
+            ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+            await message.reply(f"انت لعبت المضاربة .. تعال بعد: {ftime} دقيقة.")
+            return
+        amount = None
+        try:
+            amount = int(t.split("مضاربه ")[1])
+        except:
+            await message.reply("المبلغ لازم يكون رقم .")
+            return
+        if amount < 200:
+            await message.reply("↯ اقل مبلغ للمضاربة هو 250 ريبوكوين .")
+            return
+        pc = random.randint(0, 14)
+        if pc == 0:
+            await message.reply("حظ اوفر نسبة الربح 0% .")
+            db.setex(f"updown_{fid}", 1200, True)
+            return
+        final = amount * 2.5 / pc - 100 * 2 / 2.1
+        if final:
+            d["balance"] += int(final)
+            final = int(final)
+            db.set(f"user_{fid}", d)
+            await message.reply(f"↯ مضاربة ناجحة!\n↯ نسبة ربحك {pc}%\n↯ مبلغ الربح ( {final} ) ريبوكوين!\n↯ فلوسك الان ( {int(d['balance'])} ) ريبوكوين! ")
+            db.setex(f"updown_{fid}", 1200, True)
+    
+    if "زرف" in t:
+        user_id = None
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        if t.startswith("@"):
+            try:
+                x = await app.get_chat(t.split("زرف ")[1])
+                user_id = x.id
+            except:
+                await message.reply("↯ مالكيت الشخص .")
+                return
+            ud = db.get(f"user_{int(user_id)}")
+            if not ud:
+                await message.reply("↯ ماعنده حساب بنكي .")
+                return
+            if int(user_id) == fid:
+                return
+            if ud["balance"] < 2000:
+                await message.reply("↯ فلوسة اقل من ( 3000 ) مايمدي تزرفة .")
+                return
+            if db.get(f"zrf_{fid}"):
+                seconds = db.ttl(f"zrf_{fid}")
+                time = datetime.timedelta(seconds=seconds)
+                ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+                await message.reply(f"هييي يلحرامي قبل {ftime} دقيقة زرفت شخص، اشرد الشرطة تدور عنك.")
+                return
+            if db.get(f"mzrf_{int(user_id)}"):
+                seconds = db.ttl(f"mzrf_{int(user_id)}")
+                time = datetime.timedelta(seconds=seconds)
+                ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+                await message.reply(f"↯ مسكين هذه مزروف من {ftime} دقيقة .")
+                return
+            r = random.randint(200, 1700)
+            ud["balance"] -= int(r)
+            db.set(f"user_{int(user_id)}", ud)
+            d["haram"] += int(r)
+            db.set(f"user_{fid}", d)
+            db.setex(f"zrf_{fid}", 600, True)
+            db.setex(f"mzrof_{int(user_id)}", 600, True)
+            await message.reply(f"↯ خذ يلحرامي زرفتة {r} ريبوكوين .")
+            return
+        if message.reply_to_message:
+            try:
+                user_id = message.reply_to_message.from_user.id
+            except:
+                await message.reply("↯ مالكيت الشخص .")
+                return
+            ud = db.get(f"user_{int(user_id)}")
+            if not ud:
+                await message.reply("↯ ماعنده حساب بنكي .")
+                return
+            if int(user_id) == fid:
+                return
+            if ud["balance"] < 2000:
+                await message.reply("↯ فلوسة اقل من ( 3000 ) مايمدي تزرفة .")
+                return
+            if db.get(f"zrf_{fid}"):
+                seconds = db.ttl(f"zrf_{fid}")
+                time = datetime.timedelta(seconds=seconds)
+                ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+                await message.reply(f"هييي يلحرامي قبل {ftime} دقيقة زرفت شخص، اشرد الشرطة تدور عنك.")
+                return
+            if db.get(f"mzrof_{int(user_id)}"):
+                seconds = db.ttl(f"mzrof_{int(user_id)}")
+                time = datetime.timedelta(seconds=seconds)
+                ftime = (datetime.datetime.min + time).time().strftime("%M:%S")
+                await message.reply(f"↯ مسكين هذه مزروف من {ftime} دقيقة .")
+                return
+            r = random.randint(200, 1700)
+            ud["balance"] -= int(r)
+            db.set(f"user_{int(user_id)}", ud)
+            d["haram"] += int(r)
+            db.set(f"user_{fid}", d)
+            db.setex(f"zrf_{fid}", 600, True)
+            db.setex(f"mzrof_{int(user_id)}", 600, True)
+            await message.reply(f"↯ خذ يلحرامي زرفتة {r} ريبوكوين .")
+            return
+    if t == "تحويل":
+        await message.reply("لصنع عملية تحويل..\nتحويل المبلغ")
+        return
+    if t.startswith("تحويل "):
+        amount = None
+        d = db.get(f"user_{fid}")
+        if not d:
+            await message.reply(f"مامعك حساب بنكي .. \n ارسل <code> انشاء حساب بنكي </code> .")
+            return
+        try:
+            amount = int(t.split("تحويل ")[1])
+        except:
+            await message.reply("المبلغ لازم يكون رقماً.")
+            return
+        if amount < 200:
+            await message.reply("↯ اقل مبلغ للتحويل هو ( 200 ) ..")
+            return
+        if amount > d["balance"]:
+            await message.reply("↯ فلوسك ماتكفي .")
+            return
+        x = await message.reply("↯ ارسل ايدي الي تبي تحول له ..")
+        exc = fid
+        db.set(f"trans_{fid}", amount)
         
-        if str(user_id) in bank_data['accounts']:
-            username = bank_data['accounts'][str(user_id)]['username']
-            balance = bank_data['accounts'][str(user_id)]['balance']
-            account_number = bank_data['accounts'][str(user_id)]['account_number']
-            client.send_message(message.chat.id, f'حساب {reply.from_user.username} البنكي:\nالمستخدم: {username}\nالرصيد: {balance} دولار\nرقم حسابه : {account_number}')
-        else:
-            client.send_message(message.chat.id, f'المستخدم {reply.from_user.username} ليس لديه حساب بنكي')
-    else:
-        client.send_message(message.chat.id, 'الرجاء الرد على رسالة المستخدم لعرض حسابه البنكي')
-
-
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-OPERATION_COOLDOWN = 1200  
-
-
-last_operation_times = {}
-
-
-def get_operation_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_operation_times:
-        last_operation_time = last_operation_times[user_id]
-        elapsed_time = current_time - last_operation_time
-        remaining_time = OPERATION_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-def update_operation_time(user_id):
-    last_operation_times[user_id] = int(time.time())
-
-
-
-@app.on_message(command(['مضاعفة', 'مضاربة', 'مضاربه', 'مضاعفه']))
-def multiply(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_operation_remaining_time(user_id)
-        if remaining_time <= 0:
-            args = message.text.split(' ')
-            if len(args) == 2 and args[1].isdigit():
-                amount = int(args[1])
-                if amount <= bank_data['accounts'][str(user_id)]['balance']:
-                    bank_data['accounts'][str(user_id)]['balance'] -= amount
-                    save_bank_data(bank_data)
-                    multiplier = random.randint(2, 5)
-                    result_amount = amount * multiplier
-                    bank_data['accounts'][str(user_id)]['balance'] += result_amount
-                    save_bank_data(bank_data)
-                    client.send_message(message.chat.id, f'تهانينا! لقد قمت بالمضاعفة وحصلت على {result_amount} دولار')
-                    update_operation_time(user_id)
-                else:
-                    client.send_message(message.chat.id, 'رصيدك الحالي غير كافي')
-            else:
-                client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: مضاعفة + المبلغ')
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقيقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-OPERATION_COOLDOWN = 1200  
-
-
-last_bribe_times = {}
-
-
-def get_bribe_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_bribe_times:
-        last_bribe_time = last_bribe_times[user_id]
-        elapsed_time = current_time - last_bribe_time
-        remaining_time = OPERATION_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_bribe_time(user_id):
-    last_bribe_times[user_id] = int(time.time())
-
-
-
-@app.on_message(command('رشوة'))
-def bribe_command(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_bribe_remaining_time(user_id)
-        if remaining_time <= 0:
-            args = message.text.split(' ')
-            if len(args) == 1:
-                amount = random.randint(300, 4000)
-                if amount <= bank_data['accounts'][str(user_id)]['balance']:
-                    if message.reply_to_message is None:
-                        client.send_message(message.chat.id, 'الرجاء الرد على رسالة لإرسال الرشوة')
-                        return
-                    receiver_id = message.reply_to_message.from_user.id
-                    if receiver_id == user_id:
-                        client.send_message(message.chat.id, 'لا يمكنك إرسال رشوة لنفسك')
-                        return
-                    bank_data['accounts'][str(user_id)]['balance'] -= amount
-                    bank_data['accounts'][str(receiver_id)]['balance'] += amount
-                    save_bank_data(bank_data)
-                    client.send_message(message.chat.id, f'تمت عملية الرشوة بنجاح! قمت بتحويل {amount} دولار إلى المستلم')
-                    update_bribe_time(user_id)
-                else:
-                    client.send_message(message.chat.id, 'رصيدك الحالي غير كافي')
-            else:
-                client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: رشوة')
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-
-
-OPERATION_COOLDOWN = 1200
-
-
-last_wheel_times = {}
-
-
-def get_wheel_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_wheel_times:
-        last_wheel_time = last_wheel_times[user_id]
-        elapsed_time = current_time - last_wheel_time
-        remaining_time = OPERATION_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_wheel_time(user_id):
-    last_wheel_times[user_id] = int(time.time())
-
-
-
-@app.on_message(command("عجلة الحظ"))
-def wheel_of_fortune(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_wheel_remaining_time(user_id)
-        if remaining_time <= 0:
-            win_amount = random.randint(100, 5000)
-            bank_data['accounts'][str(user_id)]['balance'] += win_amount
-            save_bank_data(bank_data)
-            if win_amount > 0:
-                client.send_message(message.chat.id, f'تهانينا! لقد فزت بمبلغ {win_amount} دولار في عجلة الحظ')
-            else:
-                client.send_message(message.chat.id, 'عذرًا، لم تفز بأي مبلغ في عجلة الحظ هذه المرة')
-            update_wheel_time(user_id)
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقيقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-OPERATION_COOLDOWN = 1200  
-
-
-last_tip_times = {}
-
-def get_custom_tip_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_tip_times:
-        last_tip_time = last_tip_times[user_id]
-        elapsed_time = current_time - last_tip_time
-        remaining_time = OPERATION_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_custom_tip_time(user_id):
-    last_tip_times[user_id] = int(time.time())
-
-
-@app.on_message(command('بقشيش'))
-def custom_tip_command(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_custom_tip_remaining_time(user_id)
-        if remaining_time <= 0:
-            args = message.text.split(' ')
-            if len(args) == 2 and args[1].isdigit():
-                amount = int(args[1])
-                if amount <= bank_data['accounts'][str(user_id)]['balance']:
-                    if message.reply_to_message is None:
-                        client.send_message(message.chat.id, 'الرجاء الرد على رسالة لإرسال البقشيش')
-                        return
-                    receiver_id = message.reply_to_message.from_user.id
-                    if receiver_id == user_id:
-                        client.send_message(message.chat.id, 'لا يمكنك إرسال بقشيش لنفسك')
-                        return
-                    bank_data['accounts'][str(user_id)]['balance'] -= amount
-                    bank_data['accounts'][str(receiver_id)]['balance'] += amount
-                    save_bank_data(bank_data)
-                    client.send_message(message.chat.id, f'تمت عملية البقشيش بنجاح! قمت بتحويل {amount} دولار إلى المستلم')
-                    update_custom_tip_time(user_id)
-                else:
-                    client.send_message(message.chat.id, 'رصيدك الحالي غير كافي')
-            else:
-                client.send_message(message.chat.id, 'الرجاء استخدام الأمر بالشكل الصحيح: بقشيش + المبلغ')
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقيقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-
-
-
-
-
-SALARY_COOLDOWN = 1200  
-
-
-last_salary_times = {}
-
-
-def get_salary_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_salary_times:
-        last_salary_time = last_salary_times[user_id]
-        elapsed_time = current_time - last_salary_time
-        remaining_time = SALARY_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_salary_time(user_id):
-    last_salary_times[user_id] = int(time.time())
-
-
-
-@app.on_message(command('راتب'))
-def salary(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_salary_remaining_time(user_id)
-        if remaining_time <= 0:
-            salary_amount = 3500
-            bank_data['accounts'][str(user_id)]['balance'] += salary_amount
-            save_bank_data(bank_data)
-            client.send_message(message.chat.id, f'تم صرف راتبك الشهري بمبلغ {salary_amount} دولار')
-            update_salary_time(user_id)
-        else:
-            minutes = remaining_time // 60
-            seconds = remaining_time % 60
-            client.send_message(message.chat.id, f'عذرًا، يجب الانتظار {minutes} دقيقة و {seconds} ثانية قبل استخدام الأمر مرة أخرى')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
-
-
-
-
-
-
-
-
-STEAL_COOLDOWN = 1200  
-POLICE_COOLDOWN = 1200  
-
-last_steal_times = {}
-last_police_times = {}
-last_protection_times = {}
-
-
-def get_steal_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_steal_times:
-        last_steal_time = last_steal_times[user_id]
-        elapsed_time = current_time - last_steal_time
-        remaining_time = STEAL_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def get_police_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_police_times:
-        last_police_time = last_police_times[user_id]
-        elapsed_time = current_time - last_police_time
-        remaining_time = POLICE_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def get_protection_remaining_time(user_id):
-    current_time = int(time.time())
-    if user_id in last_protection_times:
-        last_protection_time = last_protection_times[user_id]
-        elapsed_time = current_time - last_protection_time
-        remaining_time = STEAL_COOLDOWN - elapsed_time
-        if remaining_time < 0:
-            remaining_time = 0
-    else:
-        remaining_time = 0
-    return remaining_time
-
-
-def update_steal_time(user_id):
-    last_steal_times[user_id] = int(time.time())
-
-
-def update_police_time(user_id):
-    last_police_times[user_id] = int(time.time())
-
-
-def update_protection_time(user_id):
-    last_protection_times[user_id] = int(time.time())
-
-@app.on_message(command("سرقة"))
-def steal_money(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_steal_remaining_time(user_id)
-        if remaining_time > 0:
-            client.send_message(message.chat.id, f'يجب عليك الانتظار لمدة {remaining_time} ثانية قبل استخدام الأمر مرة أخرى')
-        else:
-            target_id = message.reply_to_message.from_user.id
-            if str(target_id) in bank_data['accounts']:
-                if target_id == user_id:
-                    client.send_message(message.chat.id, 'لا يمكنك سرقة نفسك!')
-                else:
-                    stolen_amount = random.randint(10, 50)
-                    if stolen_amount <= bank_data['accounts'][str(target_id)]['balance']:
-                        bank_data['accounts'][str(user_id)]['balance'] += stolen_amount
-                        bank_data['accounts'][str(target_id)]['balance'] -= stolen_amount
-                        bank_data['accounts'][str(user_id)]['thief'] += stolen_amount
-                        save_bank_data(bank_data)
-                        update_steal_time(user_id)
-                        client.send_message(message.chat.id, f'تمت عملية السرقة بنجاح! تم سرقة {stolen_amount} دولار من المستخدم')
-                    else:
-                        client.send_message(message.chat.id, 'لا يمكنك سرقته لانه فقير')
-            else:
-                client.send_message(message.chat.id, 'المستخدم المحدد لا يملك حساب بنكي')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-@app.on_message(command("شرطة"))
-def police_user(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_police_remaining_time(user_id)
-        if remaining_time > 0:
-            client.send_message(message.chat.id, f'يجب عليك الانتظار لمدة {remaining_time} ثانية قبل استخدام الأمر مرة أخرى')
-        else:
-            target_id = message.reply_to_message.from_user.id
-            if str(target_id) in bank_data['accounts']:
-                if target_id == user_id:
-                    client.send_message(message.chat.id, 'لا يمكنك استخدام الأمر على نفسك!')
-                else:
-                    stolen_amount = random.randint(10, 50)
-                    if stolen_amount <= bank_data['accounts'][str(user_id)]['balance']:
-                        bank_data['accounts'][str(user_id)]['balance'] -= stolen_amount
-                        bank_data['accounts'][str(target_id)]['balance'] += stolen_amount
-                        save_bank_data(bank_data)
-                        update_police_time(user_id)
-                        client.send_message(message.chat.id, f'تمت عملية القبض على المستخدم! تم خصم {stolen_amount} دولار من حسابك')
-                    else:
-                        client.send_message(message.chat.id, 'رصيدك الحالي غير كافي للقبض على المستخدم')
-            else:
-                client.send_message(message.chat.id, 'المستخدم المحدد لا يملك حساب بنكي')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-@app.on_message(command("حماية"))
-def protect_money(client, message):
-    user_id = message.from_user.id
-    bank_data = load_bank_data()
-
-    if str(user_id) in bank_data['accounts']:
-        remaining_time = get_protection_remaining_time(user_id)
-        if remaining_time > 0:
-            client.send_message(message.chat.id, f'يجب عليك الانتظار لمدة {remaining_time} ثانية قبل استخدام الأمر مرة أخرى')
-        else:
-            protection_amount = random.randint(10, 50)
-            if protection_amount <= bank_data['accounts'][str(user_id)]['balance']:
-                bank_data['accounts'][str(user_id)]['balance'] -= protection_amount
-                save_bank_data(bank_data)
-                update_protection_time(user_id)
-                client.send_message(message.chat.id, f'تم تنفيذ عملية حماية الأموال بنجاح! تم خصم {protection_amount} دولار من حسابك')
-            else:
-                client.send_message(message.chat.id, 'رصيدك الحالي غير كافي لحماية الأموال')
-    else:
-        client.send_message(message.chat.id, 'ليس لديك حساب بنكي')
-
-
-
-
-
-
-
-
-
-@app.on_message(command(["توب الحراميه", "توب سرقه", "توب السرقة", "توب السرقه", "توب سرقة"]))
-def top_thieves(client, message):
-    bank_data = load_bank_data()
-    sorted_accounts = sorted(bank_data['accounts'], key=lambda x: bank_data['accounts'][x]['thief'], reverse=True)
-    top_thieves = sorted_accounts[:10]  
-    response = "أعلى الحرامية في البنك:\n\n"
+    if t == "توب الحرامية"  or t == "توب الحراميه":
+        users = {}
+        keys = db.keys("user_%")
+        for key in keys:
     
-    for thief_id in top_thieves:
-        thief_username = client.get_chat(int(thief_id)).username
-        thief_balance = bank_data['accounts'][thief_id]['thief']
-        response += f"@{thief_username}: {thief_balance} دولار\n"
+            type = db.get(key[0])
+            user_id = type["id"]
     
-    client.send_message(message.chat.id, response)
+            user_money = int(db.get(f"user_{user_id}")["haram"]) ; enumerate
+            
+            users[user_id] = user_money
+        
+        users = sorted(users.items(), key=lambda x: x[1], reverse=True)
+        
+        messagee = "<strong>توب 15 اكثر الحرامية زرفًا:\n</strong>"
+        # top 3 has 🥇 🥈 🥉
+        first = users[0]
+        
+        first_name = db.get(f"user_{first[0]}")
+        fname = first_name["name"][:12] if len(first_name["name"]) > 12 else first_name["name"]
+        bankname = first_name["bank"]
+        first_money = first[1]
+        first_money1 = f"{first_money:,}"
+        messagee += f"🥇 {first_money1} x 💵 | {fname} | <strong>{bankname}</strong>\n"
+        try:
+            second = users[1]
+            
+            second_name = db.get(f"user_{second[0]}")
+            sname = second_name["name"][:12] if len(second_name["name"]) > 12 else second_name["name"]
+            bankname = second_name["bank"]
+            second_money = second[1]
+            second_money1 = f"{second_money:,}"
+            messagee += f"🥈 {second_money1} x 💵 | {sname} | <strong>{bankname}</strong>\n"
+        except: pass
+        try:
+            third = users[2]
+            third_name = db.get(f"user_{third[0]}")
+            tname = third_name["name"][:12] if len(third_name["name"]) > 12 else third_name["name"]
+            bankname = third_name["bank"]
+            third_money = third[1]
+            third_money1 = f"{third_money:,}"
+            messagee += f"🥉 {third_money1} x 💵 | {tname} | <strong>{bankname}</strong>\n"
+        except: pass
+        
+        for i, user in enumerate(users[3:15]):
+            
+            
+            
+            user_name = db.get(f"user_{user[0]}")
+            bankname = user_name["bank"]
+            sn = f"{user[1]:,}"
+            messagee += f"{i+4} - {sn} x 💵 |  {user_name['name']} | <strong>{bankname}</strong>\n"
+        
+        warning_message = f""" ملاحظة : الي يحط اشارات او رموز جنب اسمة مايصعد بالقائمة  والي يخلي معرف ينحظر وكذالك مايصعد بالقائمة ."""
+        
+        messagee += f" ━━━━━━━━━\n ) \n\n{warning_message}"
+        
+        await message.reply(text=messagee, reply_markup=mk([[btn("اخفاء", callback_data=f"hide-{fid}")]]))
+        return
+    if t == "البنك" or t == "بنك":
+        x = """
+- اوامر البنك
 
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££#
-#######£££££££££££££££#######££££££££££#############££££££££££#########££££
+⌯ انشاء حساب بنكي  ↢ تسوي حساب وتقدر تحول فلوس مع مزايا ثانيه
 
+⌯ تحويل ↢ تطلب رقم حساب الشخص وتحول له فلوس
 
+⌯ حسابي  ↢ يطلع لك رقم حسابك عشان تعطيه للشخص اللي بيحول لك
 
+⌯ فلوسي ↢ يعلمك كم فلوسك
 
+⌯ راتب ↢ يعطيك راتبك كل ٢٠ دقيقة
 
+⌯ بخشيش ↢ يعطيك بخشيش كل ١٠ دقايق
 
-@app.on_message(command("توب فلوس"))
-def top_money(client, message):
-    bank_data = load_bank_data()
-    sorted_accounts = sorted(bank_data['accounts'], key=lambda x: bank_data['accounts'][x]['balance'], reverse=True)
-    top_accounts = sorted_accounts[:10]  # احصل على أول 10 حسابات بالأموال الأعلى
-    response = "أعلى الأموال في البنك:\n\n"
+⌯ زرف ↢ تزرف فلوس اشخاص كل ١٠ دقايق
+
+⌯ استثمار ↢ تستثمر بالمبلغ اللي تبيه مع نسبة ربح مضمونه من ١٪؜ الى ١٥٪؜
+
+⌯ حظ ↢ تلعبها بأي مبلغ ياتدبله ياتخسره انت وحظك
+
+⌯ مضاربه ↢ تضارب بأي مبلغ تبيه والنسبة انت وحظك
+
+⌯ توب الفلوس ↢ يطلع توب اكثر ناس معهم فلوس بكل القروبات
+
+⌯ توب الحراميه ↢ يطلع لك اكثر ناس زرفوا
+        """
+        await message.reply(x)
+        return
+    if t == "توب الاغنياء" or t == "توب فلوس" or t == "توب الفلوس":
+        users = {}
+        keys = db.keys("user_%")
+        for key in keys:
     
-    for account_id in top_accounts:
-        account_username = client.get_chat(account_id).username
-        account_balance = bank_data['accounts'][account_id]['balance']
-        response += f"@{account_username}: {account_balance} دولار\n"
+            type = db.get(key[0])
+            user_id = type["id"]
     
-    client.send_message(message.chat.id, response)
+            user_money = int(db.get(f"user_{user_id}")["balance"]) ; enumerate
+            
+            users[user_id] = user_money
+        
+        users = sorted(users.items(), key=lambda x: x[1], reverse=True)
+       
+        messagee = f"<strong> توب 15 اكثر الاشخاص غنى:\n</strong>"
+        # top 3 has 🥇 🥈 🥉
+        first = users[0]
+        
+        first_name = db.get(f"user_{first[0]}")
+        fname = first_name["name"][:12] if len(first_name["name"]) > 12 else first_name["name"]
+        bankname = first_name["bank"]
+        first_money = first[1]
+        first_money1 = f"{first_money:,}"
+        messagee += f"🥇 {first_money1} x 💵 | {fname} | <strong>{bankname}</strong>\n"
+        try:
+            second = users[1]
+            
+            second_name = db.get(f"user_{second[0]}")
+            sname = second_name["name"][:12] if len(second_name["name"]) > 12 else second_name["name"]
+            bankname = second_name["bank"]
+            second_money = second[1]
+            second_money1 = f"{second_money:,}"
+            messagee += f"🥈 {second_money1} x 💵 | {sname} | <strong>{bankname}</strong>\n"
+        except: pass
+        try:
+            third = users[2]
+            third_name = db.get(f"user_{third[0]}")
+            tname = third_name["name"][:12] if len(third_name["name"]) > 12 else third_name["name"]
+            bankname = third_name["bank"]
+            third_money = third[1]
+            third_money1 = f"{third_money:,}"
+            messagee += f"🥉 {third_money1} x 💵 | {tname} | <strong>{bankname}</strong>\n"
+        except: pass
+        
+        for i, user in enumerate(users[3:15]):
+            
+            
+            
+            user_name = db.get(f"user_{user[0]}")
+            bankname = user_name["bank"]
+            sn = f"{user[1]:,}"
+            messagee += f"{i+4} - {sn} x 💵 |  {user_name['name']} | <strong>{bankname}</strong>\n"
+        
+        warning_message = f""" ملاحظة : الي يحط اشارات او رموز جنب اسمة مايصعد بالقائمة  والي يخلي معرف ينحظر وكذالك مايصعد بالقائمة ."""
+        
+        messagee += f" ━━━━━━━━━\n ) \n\n{warning_message}"
+        
+        await message.reply(text=messagee, reply_markup=mk([[btn("اخفاء", callback_data=f"hide-{fid}")]])) 
 
-
-
-
-
-
+    
+    
+@app.on_callback_query()
+async def crec(_: Client, call: CallbackQuery):
+    fid, mid, cid, data= call.from_user.id, call.message.id, call.message.chat.id, call.data
+    if data.startswith("hide-"):
+        id = data.split("-")[1]
+        if int(id) != fid:
+            return
+        await app.delete_messages(cid, mid)
+        return
+    if data.startswith("tpfls-"):
+        id = data.split("-")[1]
+        if int(id) != fid:
+            return
+        users = {}
+        keys = db.keys("user_%")
+        for key in keys:
+    
+            type = db.get(key[0])
+            user_id = type["id"]
+    
+            user_money = int(db.get(f"user_{user_id}")["balance"]) ; enumerate
+            
+            users[user_id] = user_money
+        
+        users = sorted(users.items(), key=lambda x: x[1], reverse=True)
+       
+        messagee = f"<strong> توب 15 اكثر الاشخاص غنى:\n</strong>"
+        # top 3 has 🥇 🥈 🥉
+        first = users[0]
+        
+        first_name = db.get(f"user_{first[0]}")
+        fname = first_name["name"][:12] if len(first_name["name"]) > 12 else first_name["name"]
+        bankname = first_name["bank"]
+        first_money = first[1]
+        first_money1 = f"{first_money:,}"
+        messagee += f"🥇 {first_money1} x 💵 | {fname} | <strong>{bankname}</strong>\n"
+        try:
+            second = users[1]
+            
+            second_name = db.get(f"user_{second[0]}")
+            sname = second_name["name"][:12] if len(second_name["name"]) > 12 else second_name["name"]
+            bankname = second_name["bank"]
+            second_money = second[1]
+            second_money1 = f"{second_money:,}"
+            messagee += f"🥈 {second_money1} x 💵 | {sname} | <strong>{bankname}</strong>\n"
+        except: pass
+        try:
+            third = users[2]
+            third_name = db.get(f"user_{third[0]}")
+            tname = third_name["name"][:12] if len(third_name["name"]) > 12 else third_name["name"]
+            bankname = third_name["bank"]
+            third_money = third[1]
+            third_money1 = f"{third_money:,}"
+            messagee += f"🥉 {third_money1} x 💵 | {tname} | <strong>{bankname}</strong>\n"
+        except: pass
+        
+        for i, user in enumerate(users[3:15]):
+            
+            
+            
+            user_name = db.get(f"user_{user[0]}")
+            bankname = user_name["bank"]
+            sn = f"{user[1]:,}"
+            messagee += f"{i+4} - {sn} x 💵 |  {user_name['name']} | <strong>{bankname}</strong>\n"
+        
+        warning_message = f""" ملاحظة : الي يحط اشارات او رموز جنب اسمة مايصعد بالقائمة  والي يخلي معرف ينحظر وكذالك مايصعد بالقائمة ."""
+        
+        messagee += f" ━━━━━━━━━\n ) \n\n{warning_message}"
+        
+        await app.edit_message_text(text=messagee, chat_id=cid, message_id=mid, reply_markup=mk([[btn("اخفاء", callback_data=f"hide-{fid}")]]))
+        return
+    if data.startswith("haram-"):
+        id = data.split("-")[1]
+        if int(id) != fid:
+            return
+        users = {}
+        keys = db.keys("user_%")
+        for key in keys:
+    
+            type = db.get(key[0])
+            user_id = type["id"]
+    
+            user_money = int(db.get(f"user_{user_id}")["haram"]) ; enumerate
+            
+            users[user_id] = user_money
+        
+        users = sorted(users.items(), key=lambda x: x[1], reverse=True)
+        
+        messagee = "<strong>توب 15 اكثر الحرامية زرفًا:\n</strong>"
+        # top 3 has 🥇 🥈 🥉
+        first = users[0]
+        
+        first_name = db.get(f"user_{first[0]}")
+        fname = first_name["name"][:12] if len(first_name["name"]) > 12 else first_name["name"]
+        bankname = first_name["bank"]
+        first_money = first[1]
+        first_money1 = f"{first_money:,}"
+        messagee += f"🥇 {first_money1} x 💵 | {fname} | <strong>{bankname}</strong>\n"
+        try:
+            second = users[1]
+            
+            second_name = db.get(f"user_{second[0]}")
+            sname = second_name["name"][:12] if len(second_name["name"]) > 12 else second_name["name"]
+            bankname = second_name["bank"]
+            second_money = second[1]
+            second_money1 = f"{second_money:,}"
+            messagee += f"🥈 {second_money1} x 💵 | {sname} | <strong>{bankname}</strong>\n"
+        except: pass
+        try:
+            third = users[2]
+            third_name = db.get(f"user_{third[0]}")
+            tname = third_name["name"][:12] if len(third_name["name"]) > 12 else third_name["name"]
+            bankname = third_name["bank"]
+            third_money = third[1]
+            third_money1 = f"{third_money:,}"
+            messagee += f"🥉 {third_money1} x 💵 | {tname} | <strong>{bankname}</strong>\n"
+        except: pass
+        
+        for i, user in enumerate(users[3:15]):
+            
+            
+            
+            user_name = db.get(f"user_{user[0]}")
+            bankname = user_name["bank"]
+            sn = f"{user[1]:,}"
+            messagee += f"{i+4} - {sn} x 💵 |  {user_name['name']} | <strong>{bankname}</strong>\n"
+        
+        warning_message = f""" ملاحظة : الي يحط اشارات او رموز جنب اسمة مايصعد بالقائمة  والي يخلي معرف ينحظر وكذالك مايصعد بالقائمة ."""
+        
+        messagee += f" ━━━━━━━━━\n ) \n\n{warning_message}"
+        
+        await app.edit_message_text(text=messagee, chat_id=cid, message_id=mid, reply_markup=mk([[btn("اخفاء", callback_data=f"hide-{fid}")]]))
+        return
+    if data.startswith("bank-"):
+        bankname, userid = data.split("-")[1].replace("trakos", "تراكوس").replace("patrick", "باترك بيتمن").replace("arab", "بنك العرب"), data.split("-")[2]
+        if int(userid) != fid:
+            return
+        if db.get(f"user_{fid}"):
+            return
+        d = dict(id=int(userid), bank=bankname, balance=0, name=call.from_user.first_name, haram=0)
+        db.set(f"user_{fid}", d)
+        await app.edit_message_text(text=f"تم صنع حسابك البنكي بنجاح!\nارسل كلمه <strong> حسابي </strong> لرؤية حسابك!", chat_id=cid, message_id=mid)
+        return
