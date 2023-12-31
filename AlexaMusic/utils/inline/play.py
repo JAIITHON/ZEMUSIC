@@ -40,21 +40,22 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
                 callback_data=f"add_playlist {videoid}",
             ),
             InlineKeyboardButton(
-                text="", url=f"https://t.me/Jankari_Ki_Duniya"
+                text="‹ قائمة التحكم ›",
+                callback_data=f"PanelMarkup {videoid}|{chat_id}",
             ),
         
             InlineKeyboardButton(
-                text="‹ قائمة التحكم ›",
-                callback_data=f"PanelMarkup {videoid}|{chat_id}",
+                text="‹ السورس ›",
+                url=f"https://t.me/Source_Ze",
               ),            
             ],
     [
-            InlineKeyboardButton(text="‹ اغلاق ›", callback_data="close"),
+            InlineKeyboardButton(
+                text=f"‹ المطور ›",
+                url=f"https://t.me/ELHYBA",
         ],
         [
-            InlineKeyboardButton(
-                text=f"",
-                url=f"https://t.me/H_M_Dr",
+            InlineKeyboardButton(text="‹ اغلاق ›", callback_data="close"),
             )
         ],
     ]
@@ -75,7 +76,7 @@ def telegram_markup_timer(_, chat_id, played, dur):
                 text="‹ قوائم التشغيل ›",
                 callback_data=f"add_playlist {videoid}",
             ),
-            InlineKeyboardButton(text="", url=f"https://t.me/Jankari_Ki_Duniya"),
+            InlineKeyboardButton(text="‹ السورس ›", url=f"https://t.me/Source_Ze"),
         
             InlineKeyboardButton(
                 text="‹ قائمة التحكم ›",
@@ -99,7 +100,7 @@ def stream_markup(_, videoid, chat_id):
                 text="‹ قوائم التشغيل ›",
                 callback_data=f"add_playlist {videoid}",
             ),
-            InlineKeyboardButton(text="", url=f"https://t.me/Jankari_Ki_Duniya"),
+            InlineKeyboardButton(text="‹ السورس ›", url=f"https://t.me/Source_Ze"),
         
             InlineKeyboardButton(
                 text="‹ قائمة التحكم ›",
