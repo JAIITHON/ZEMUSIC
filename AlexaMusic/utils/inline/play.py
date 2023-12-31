@@ -53,6 +53,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
             InlineKeyboardButton(
                 text=f"‹ المطور ›",
                 url=f"https://t.me/ELHYBA",
+          ),
         ],
         [
             InlineKeyboardButton(text="‹ اغلاق ›", callback_data="close"),
