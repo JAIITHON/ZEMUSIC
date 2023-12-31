@@ -7,6 +7,7 @@ from typing import Union
 from AlexaMusic import app
 import re
 import sys
+from config import OWNER_ID
 
 GAME_MESSAGE = "🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱\n\n🐉¦ مرحبا بك عزيزي:\n🐉¦في قسم العاب زد إي\n\n🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱"
 GAME_BUTTONS = [
