@@ -20,7 +20,7 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 
-USER_OWNER = getenv("USER_OWNER","BxxBxxL")
+USER_OWNER = getenv("USER_OWNER","ELHYBA")
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", "900"))
 
@@ -28,9 +28,9 @@ SONG_DOWNLOAD_DURATION = int(getenv("SONG_DOWNLOAD_DURATION_LIMIT", "180"))
 
 LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
 
-MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "˛ َِ𝗔َِ𝗹َِ𝘀َِ𝗵 .¹#")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "乛⁪⁬𝙈𝙐𝙎𝙄𝘾")
 
-OWNER_ID = list(map(int, getenv("OWNER_ID", "6186856384 6186856384").split()))
+OWNER_ID = list(map(int, getenv("OWNER_ID", "6581896306").split()))
 
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
@@ -40,14 +40,14 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/RRR8RR/xvals",
+    "https://github.com/modymesourceze/ZEMUSIC",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BxxBxxL")
-SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/xLxLxLrr3")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Source_Ze")
+SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/ZeSupport")
 MUST_JOIN = getenv("MUST_JOIN", None)
 
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "False")
@@ -76,15 +76,15 @@ VIDEO_STREAM_LIMIT = int(getenv("VIDEO_STREAM_LIMIT", "3"))
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", "30"))
 
 CHANNEL_SUDO = getenv(
-    "CHANNEL_SUDO", "xLxLxLrr3"
+    "CHANNEL_SUDO", "Source_Ze"
 )  # معرف قناتك بدون @
 
 YAFA_NAME = getenv(
-    "YAFA_NAME", "‹ سورس رنثون ›"
+    "YAFA_NAME", "‹ سورس زد إي ›"
 )  # اسم قناتك
 
 YAFA_CHANNEL = getenv(
-   " YAFA_CHANNEL", "https://t.me/xLxLxLrr3"
+   " YAFA_CHANNEL", "https://t.me/Source_Ze"
 )  # رابط قناتك
 
 PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", "25"))
@@ -115,7 +115,7 @@ clean = {}
 autoclean = []
 
 START_IMG_URL = getenv(
-    "START_IMG_URL", "https://telegra.ph/file/02c2fdc88274c0fd5a0cb.jpg"
+    "START_IMG_URL", "https://telegra.ph/file/3dd59102dc041f36e28d2.jpg"
 )
 PING_IMG_URL = getenv(
     "PING_IMG_URL",
