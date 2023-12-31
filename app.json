@@ -1,7 +1,7 @@
 {
-    "name": " ميوزك سورس رنثون",
-    "description": "رنثون ميوزك افضل السورسات العربيه.",
-    "logo": "https://telegra.ph/file/02c2fdc88274c0fd5a0cb.jpg",
+    "name": "🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱",
+    "description": "زد إي ميوزك افضل السورسات العربيه.",
+    "logo": "https://telegra.ph/file/c4f9c850312c8891385a9.jpg",
     "keywords": [
     "python3",
     "telegram",
@@ -14,13 +14,13 @@
     "stack": "container",
     "env": {
       "API_ID": {
-        "description": "لا تغير مومهم هذا ",
-        "value": "16228908",
+        "description": "الايبي ايدي حط ",
+        "value": "25281175",
         "required": true
       },
       "API_HASH": {
-        "description": "ايضا مو مهم والله ",
-        "value": "1e0ebcbec6fb07e5064f54797e0cadb5",
+        "description": "الايبي هاش حط",
+        "value": "6d99cb2b60a2c519fc1f99bd19565730",
         "required": true          
       },
       "BOT_TOKEN": {
@@ -28,9 +28,14 @@
         "value": "",
         "required": true
       },
+      "START_IMG_URL": {
+        "description": "صورة الستارت",
+        "value": "https://telegra.ph/file/911a6335a2e3c796659b1.jpg",
+        "required": true
+      },
       "OWNER_ID": {
         "description": "حط ايدي المالك",
-        "value": "6186856384",
+        "value": "6581896306",
         "required": true
       },        
       "MONGO_DB_URI": {
@@ -40,7 +45,7 @@
           },
       "MUSIC_BOT_NAME": {
         "description": "اسم بوتك بالعربي",
-        "value": "رنثون",
+        "value": "توم",
         "required": true
       },
       "STRING_SESSION": {
@@ -53,6 +58,16 @@
         "value": "",
         "required": false
       },
+      "ASS_US": {
+        "description": "يوزر حساب المساعد",
+        "value": "",
+        "required": false
+      },
+      "ASS_ID": {
+        "description": "ايدي حساب المساعد",
+        "value": "",
+        "required": false
+      },
 
       "HEROKU_APP_NAME": {
         "description": "اسم التطبيق اول فار",
@@ -61,7 +76,7 @@
       },
       "LOG_GROUP_ID": {
         "description": "ايدي كروب السجل حطه",
-        "value": "-100",
+        "value": "-1002015543535",
         "required": true
       }
     },
