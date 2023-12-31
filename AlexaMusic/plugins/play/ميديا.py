@@ -3,6 +3,7 @@ from pyrogram.types import Message
 import os
 from strings.filters import command
 from AlexaMusic import app
+from telegraph import upload_file
 
 @app.on_message(command(["تليجراف ميديا","ميديا"]))
 async def get_link_group(client, message):
