@@ -308,7 +308,7 @@ async def kaompj(client, message):
 )
 async def zohary(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/02c2fdc88274c0fd5a0cb.jpg",
+        photo=f"https://telegra.ph/file/c4f9c850312c8891385a9.jpg",
         caption= GAME_MESSAGE,
         reply_markup=InlineKeyboardMarkup(GAME_BUTTONS)
     )  
@@ -360,7 +360,7 @@ async def callback_query(client, CallbackQuery):
               )
           elif CallbackQuery.data == "GAME":
                
-               RETURN_GAME = "🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱\n\n🐉¦مرحبا بك في قسم العاب cr\n🐉¦اختار ما تشاء من الالعاب مسليه وستمتع بها\n\n🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱" 
+               RETURN_GAME = "🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱\n\n🐉¦مرحبا بك في قسم العاب ze\n🐉¦اختار ما تشاء من الالعاب مسليه وستمتع بها\n\n🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱" 
 
                RETURN_BUTTON = [
                     [ 
