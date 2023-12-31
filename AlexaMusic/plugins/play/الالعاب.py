@@ -7,7 +7,6 @@ from typing import Union
 from AlexaMusic import app
 import re
 import sys
-from config import OWNER_ID
 
 GAME_MESSAGE = "🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱\n\n🐉¦ مرحبا بك عزيزي:\n🐉¦في قسم العاب زد إي\n\n🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱. 🔱"
 GAME_BUTTONS = [
@@ -52,218 +51,182 @@ async def nml(client, message):
 
 @app.on_message(command("رفع صرصر"))
 async def rf3srsar(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n صرصر 😂♥️")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n صرصر 😂♥️")
 
 
 @app.on_message(command("تنزيل صرصر"))
 async def tnzelsrar(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n صرصر 😂♥️")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n صرصر 😂♥️")
 
 
 @app.on_message(command("رفع رقاصه"))
 async def yasooo(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n رقاصه واحد يذب فلوس عليها 😂💃")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n رقاصه واحد يذب فلوس عليها 😂💃")
 
 
 @app.on_message(command("تنزيل رقاصه"))
 async def yaso(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n رقاصه تابت😂😔")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n رقاصه تابت😂😔")
   
   
 @app.on_message(command("رفع منيوج"))
 async def bjoiuyjk(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n منيوج واحد يركبه 😂♥️")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n منيوج واحد يركبه 😂♥️")
 
 
 @app.on_message(command("تنزيل منيوج"))
 async def kamal(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n منيوج كواد تاب 😂♥️")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n منيوج كواد تاب 😂♥️")
   
   
 @app.on_message(command("رفع وصخ"))
 async def fdsa(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n وصخ بنجاح  😂♥️")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n وصخ بنجاح  😂♥️")
 
 
 @app.on_message(command("تنزيل وصخ"))
 async def kophvc(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n الوصخ استحمي 😂♥️")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n الوصخ استحمي 😂♥️")
   
   
 @app.on_message(command("رفع عار"))
 async def roky(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n عار عالمجتمع 😂♥️")
+  await message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n عار عالمجتمع 😂♥️")
 
 
 @app.on_message(command("تنزيل عار"))
 async def zerso(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n عار خلاص 😂♥️")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n عار خلاص 😂♥️")
   
   
 @app.on_message(command("رفع بقره"))
 async def vvvtyy(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n صار بقره واحد يحلبه 🐄🤭")
+  await message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n صار بقره واحد يحلبه 🐄🤭")
 
 
 @app.on_message(command("تنزيل بقره"))
 async def tttryuh(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n ما ضل حليب  😂")
+  await message.reply_text(f"تم تنزيل العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n ما ضل حليب  😂")
   
   
 @app.on_message(command("رفع قرد"))
 async def uiipppl(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n قرد واحد ينطي موزه 😂🐒")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n قرد واحد ينطي موزه 😂🐒")
 
 
 @app.on_message(command("تنزيل قرد"))
 async def bjhupq(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n القرد صار بشر🙊🧍")
+  await message.reply_text(f"تم تنزيل العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n القرد صار بشر🙊🧍")
   
   
 @app.on_message(command("رفع قلبي"))
 async def pooiejh(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n خلاص صرت گلبه 😂♥️")
+  await message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n خلاص صرت گلبه 😂♥️")
 
 
 @app.on_message(command("تنزيل قلبي"))
 async def ttrqew(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\nما بقيت گلبهو 😭💔")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\nما بقيت گلبهو 😭💔")
   
   
 @app.on_message(command("رفع خدام"))
 async def qyui(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خدام تع خدم بالكروب    😂🤓")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خدام تع خدم بالكروب    😂🤓")
 
 
 @app.on_message(command("تنزيل خدام"))
 async def klhj(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n الخدام ترك الشغل  😢🚶")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n الخدام ترك الشغل  😢🚶")
   
   
 @app.on_message(command("رفع كواد"))
 async def wqew(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n كواد الكروب  😂🤓")
+  await message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n كواد الكروب  😂🤓")
 
 
 @app.on_message(command("تنزيل كواد"))
 async def ohho(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n الكواد صار زلمه   😂🧔")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n الكواد صار زلمه   😂🧔")
   
   
 @app.on_message(command("رفع ارمله"))
 async def drsss(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  صرتي ارمله وزوجك مات 🥹")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  صرتي ارمله وزوجك مات 🥹")
 
 
 @app.on_message(command("تنزيل ارمله"))
 async def gkvdr(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  خلاص لا تصيرين حزينه رجلج عايش هياته 😂🫶🏻")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  خلاص لا تصيرين حزينه رجلج عايش هياته 😂🫶🏻")
   
   
 @app.on_message(command("رفع صاكه"))
 async def cgfyu6f(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n يصاكه خدي بالك من نفسك 🥹❤️")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n يصاكه خدي بالك من نفسك 🥹❤️")
 
 
 @app.on_message(command("تنزيل صاكه"))
 async def hhhhug(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n انتي صدكتي صاكه ولا شنو اني جنت اشاقه 😂😝")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n انتي صدكتي صاكه ولا شنو اني جنت اشاقه 😂😝")
   
   
 @app.on_message(command("رفع ابني"))
 async def cbky(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  صرت ابنه وكل حياتو🥹🖤")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  صرت ابنه وكل حياتو🥹🖤")
 
 
 @app.on_message(command("تنزيل ابني"))
 async def ccgy(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n حتى عائلتك ما يريدوك ذبوك  بالشارع ")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n حتى عائلتك ما يريدوك ذبوك  بالشارع ")
   
   
 @app.on_message(command("رفع خاينه"))
 async def mkloo(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n  ي خاينه ي حقيره ")
+  await message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n  ي خاينه ي حقيره ")
 
 
 @app.on_message(command("تنزيل خاينه"))
 async def fkijbh(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n منو غبي للي جان مفكر الكمر هاذا يطلع خاين 🥹🥹💕")  
+  await message.reply_text(f"تم تنزيل العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n منو غبي للي جان مفكر الكمر هاذا يطلع خاين 🥹🥹💕")  
   
   
 @app.on_message(command("رفع بنتي"))
 async def yuhhss(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n صرتي بنتي وقطعه من گلبي 🥹❤️❤️❤️")
+  await message.reply_text(f"تم رفع العض\n🗿 \n√و : {message.reply_to_message.from_user.mention}\n\n صرتي بنتي وقطعه من گلبي 🥹❤️❤️❤️")
 
 
 @app.on_message(command("تنزيل بنتي"))
 async def hloih(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\nكنت بهزر اني مخلفتش لسه🤡😂  ")  
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\nكنت بهزر اني مخلفتش لسه🤡😂  ")  
   
   
 @app.on_message(command("رفع خاين"))
 async def kloss(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خنتها  جم مره كول لتخاف يخاين")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خنتها  جم مره كول لتخاف يخاين")
 
 
 @app.on_message(command("تنزيل خاين"))
 async def fiihug(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n شنو هاذا طلع سوء تفاهم انت اشرف من الشرف 😂❤️")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n شنو هاذا طلع سوء تفاهم انت اشرف من الشرف 😂❤️")
   
   
 @app.on_message(command("رفع كواد"))
 async def dadr(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n 😂 كواد طول عمرك مو اول مره")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n 😂 كواد طول عمرك مو اول مره")
 
 
 @app.on_message(command("تنزيل كواد"))
 async def hjj7gv(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  هاي نزلتك لتعصب 🙂💕")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n  هاي نزلتك لتعصب 🙂💕")
   
   
 @app.on_message(command("رفع مطي"))
 async def cgfyu6f(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خلاص صار مطي رسمي 😹")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خلاص صار مطي رسمي 😹")
 
 
 @app.on_message(command("تنزيل مطي"))
 async def cxxv(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خلاص جنه نشاقه وياك لا تصير فد نوب 😂😝")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خلاص جنه نشاقه وياك لا تصير فد نوب 😂😝")
   
   
 
@@ -271,86 +234,72 @@ async def cxxv(client, message):
 
 @app.on_message(command("رفع غبي"))
 async def polkij(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n غبي وراح تضل غبي😹🤞")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n غبي وراح تضل غبي😹🤞")
 
 
 @app.on_message(command("تنزيل غبي"))
 async def nbvcc(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n غبي وصار يفتهم😹🫶")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n غبي وصار يفتهم😹🫶")
   
   
 @app.on_message(command("رفع مريتي"))
 async def ttttuhyp(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n مريتك خذ  وجيبلنه بيبي😹😽")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n مريتك خذ  وجيبلنه بيبي😹😽")
 
 
 @app.on_message(command("تنزيل مريتي"))
 async def xxxxt(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n طلقتها شوف غيرها 😂😝")  
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n طلقتها شوف غيرها 😂😝")  
   
   
 @app.on_message(command("رفع زبال"))
 async def oooph(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n زبال تع  نضف الكروب😹")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n زبال تع  نضف الكروب😹")
 
 
 @app.on_message(command("تنزيل زبال"))
 async def zzzas(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n زبال تعب و استقال 😂😝")  
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n زبال تعب و استقال 😂😝")  
   
   
 @app.on_message(command("رفع خدامه"))
 async def ggggop(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خدامه تع اغسلي رجلي 😹🤞")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خدامه تع اغسلي رجلي 😹🤞")
 
 
 @app.on_message(command("تنزيل خدامه"))
 async def vvvuu(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\nخدامه نزلت اجازه😹🫶")  
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\nخدامه نزلت اجازه😹🫶")  
   
   
 @app.on_message(command("رفع جلب"))
 async def mmmuy(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n جلب خذ عضمه😹🤞")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n جلب خذ عضمه😹🤞")
 
 
 @app.on_message(command("تنزيل جلب"))
 async def dfrewq(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خلاص جلب صار الانسان😿😹")  
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n خلاص جلب صار الانسان😿😹")  
   
   
 @app.on_message(command("رفع طيز"))
 async def ssoss(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n طيز و جبيره هماتين😹🤞")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n طيز و جبيره هماتين😹🤞")
 
 
 @app.on_message(command("تنزيل طيز"))
 async def nobo(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n طيز لا تزعل نزلتك😹🫶")  
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n طيز لا تزعل نزلتك😹🫶")  
   
   
 @app.on_message(command("رفع حرامي"))
 async def llok(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n حرامي راح ابلغ عنه😹🚓")
+  await message.reply_text(f"تم رفع العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n حرامي راح ابلغ عنه😹🚓")
 
 
 @app.on_message(command("تنزيل حرامي"))
 async def kaompj(client, message):
-  if message.from_user.id == OWNER_ID: return message.reply("هذا مطوري!")
-  await return message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n حرامي ربنا تاب عليه😂😔")
+  await message.reply_text(f"تم تنزيل العضو\n🗿 \n√ : {message.reply_to_message.from_user.mention}\n\n حرامي ربنا تاب عليه😂😔")
   
 
 @app.on_message(
