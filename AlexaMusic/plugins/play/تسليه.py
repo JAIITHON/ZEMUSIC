@@ -46,7 +46,7 @@ REPLY_MESSAGE_BUTTONS = [
         ("صراحه")
     ],
     [
-        ("الالعاب. 🐰")
+        ("الالعاب. 🔱")
     ],
     [
         ("نكته"),
@@ -84,7 +84,7 @@ REPLY_MESSAGE_BUTTONS = [
     ]
 ]
 
-@app.on_message(filters.regex("الاوامر"))
+@app.on_message(filters.regex("/ZE"))
 async def cpanel(_, message: Message):             
         text = REPLY_MESSAGE
         reply_markup = ReplyKeyboardMarkup(REPLY_MESSAGE_BUTTONS, resize_keyboard=True, selective=True)
@@ -95,20 +95,21 @@ async def cpanel(_, message: Message):
 
 @app.on_message(filters.regex("^اخفاء الازرار . 🕷$"))
 async def down(client, message):
-          m = await message.reply(" **- تم اخفاء الازرار بنجاح . 🐰\n\n- لاظهار كيب الارشادات /ARN   \n. 🕷**\n\n- لاظهار كيب الاعضاء والتسليه  /AFYN  \n. 🕷**", reply_markup= ReplyKeyboardRemove(selective=True))
+          m = await message.reply(" **- تم اخفاء الازرار بنجاح . 🔱\n\n- لاظهار كيب الارشادات /ZE   \n. 🕷**\n\n- لاظهار كيب الاعضاء والتسليه  /MODY  \n. 🕷**", reply_markup= ReplyKeyboardRemove(selective=True))
 
 
 
 @app.on_message(filters.regex("يـوتيوب. 📽"))
 def reply_to_HEY(Client, message):
     message.reply_photo(
-        photo=f"https://telegra.ph/file/9082f22163efb73912bab.jpg",
+        photo=f"https://telegra.ph/file/c4f9c850312c8891385a9.jpg",
         caption=f"""**يتم استخدام هذا الامر لعرض تحميل من اليوتيوب**\n**استخدم الامر بهذا الشكل** `تنزيل` ** او ** `يوتيوب` ** كمثل تنزيل سوره الرحمن اضغط علي الامر لنسخ والاستخدام**""",
         reply_markup=InlineKeyboardMarkup(
             [
             [
-                InlineKeyboardButton("𝗦𝗢𝗨𝗥𝗖𝗘 𝗥𝗨𝗡𝗧𝗛𝗢𝗡", url=f"https://t.me/xLxLxLrr3"),
+                InlineKeyboardButton("🔱 𝐒𝐎𝐔𝐑𝐂𝐄 𝐙𝐄 🔱", url=f"https://t.me/Source_Ze"),
             ]
          ]
      )
-)
+  )
+

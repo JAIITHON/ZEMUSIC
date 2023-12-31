@@ -33,7 +33,7 @@ async def tom(client, message):
         	await client.ban_chat_member(chat_id, user_id)
         	await message.reply("تم طرد العضو")   	
         except:
-        	await message.reply("مجاي اعرف اطردو")
+        	await message.reply("لم يتم مظر العضو")
         
         
 

@@ -16,7 +16,7 @@ from pyrogram.errors import FloodWait
 
 
 
-@app.on_message(command(["المالك", "صاحب الكروب", "المنشئ"]) & filters.group)
+@app.on_message(command(["المالك", "صاحب الخرابه", "المنشي"]) & filters.group)
 async def gak_owne(client: Client, message: Message):
       if len(message.command) >= 2:
          return 
@@ -30,7 +30,7 @@ async def gak_owne(client: Client, message: Message):
                  m = await client.get_chat(id)
                  if m.photo:
                        photo = await app.download_media(m.photo.big_file_id)
-                       return await message.reply_photo(photo, caption=f"🕷 ¦𝙽𝙰𝙼𝙴 :{m.first_name}\n🐉 ¦𝚄𝚂𝙴𝚁 :@{m.username}\n🐰 ¦𝙸𝙳 :`{m.id}`\n🎬 ¦𝙱𝙸𝙾 :{m.bio}\n💎 ¦𝙲𝙷𝙰𝚃: {message.chat.title}\n🗿 ¦𝙸𝙳.𝙲𝙷𝙰𝚃 :`{message.chat.id}`",reply_markup=key)
+                       return await message.reply_photo(photo, caption=f"**- 𝒈𝒓𝒐𝒖𝒑 𝒐𝒘𝒏𝒆𝒓 𝒊𝒏𝒇𝒐𝒓𝒎𝒂𝒕𝒊𝒐𝒏 : \n\n⌁︙ 𝒏𝒂𝒎𝒆 : {m.first_name}\n\n⌁︙ 𝒖𝒔𝒆𝒓 : @{m.username}\n\n⌁︙ 𝒃𝒊𝒐 :\n{m.bio}",reply_markup=key)
                  else:
                     return await message.reply("• " + member.user.mention)
                     
@@ -38,10 +38,10 @@ async def gak_owne(client: Client, message: Message):
    
 
    
-@app.on_message(command(["اسمي", "شنو اسمي"]) & filters.group )
+@app.on_message(command(["اسمي","‹ اسمي ›"]) & filters.group )
 async def vgdg(client: Client, message: Message):
     await message.reply_text(
-        f"""❤️‍🔥 اسمك »»  {message.from_user.mention()}""") 
+        f"""**- اسمك ›**  {message.from_user.mention()}""") 
 
         
 
@@ -54,7 +54,7 @@ async def nummmm(client: app, message):
   if not chek.status in ["administrator", "creator"]:
     await message.reply("**يجب انت تكون مشرف لاستخدام الامر 🐉**")
     return
-  await message.reply_text("**لايقاف الامر اضغط **\n /cancel او اكتب ايقاف")
+  await message.reply_text("**لايقاف الامر اضغط **\n /cancel او اكتب كافي")
   i = 0
   txt = ""
   zz = message.text
@@ -63,7 +63,7 @@ async def nummmm(client: app, message):
           photo = await client.download_media(photo_id)
           zz = message.caption
   try:
-   zz = zz.replace("@all","").replace("تاك","").replace("صيح الكل","")
+   zz = zz.replace("@all","").replace("تاك","").replace("نادي الكل","")
   except:
     pass
   array.append(message.chat.id)
@@ -92,7 +92,7 @@ async def nummmm(client: app, message):
   array.remove(message.chat.id)
 
 
-@app.on_message(command(["ايقاف", "/cancel","بس منشن"]))
+@app.on_message(command(["كافي", "/cancel","بس منشن"]))
 async def stop(client, message):
   chek = await client.get_chat_member(message.chat.id, message.from_user.id)
   if not chek.status in ["administrator", "creator"]:
@@ -105,7 +105,6 @@ async def stop(client, message):
     array.remove(message.chat.id)
     await message.reply("**تم ايقاف المنشن بنجاح*\n√*")
     return
-
 
 
 

@@ -125,7 +125,7 @@ async def khalid(client: Client, message: Message):
                     
 **↯ : ايديك : › `{message.from_user.id}`**
                     
-**↯ : النبذه : › \n {bio}**""", 
+**↯ : البايو : › \n {bio}**""", 
 
         reply_markup=InlineKeyboardMarkup(
 
@@ -135,7 +135,7 @@ async def khalid(client: Client, message: Message):
 
                     InlineKeyboardButton(
 
-                                            name, user_id=6186856384)
+                                            name, user_id=6581896306)
                 ],
 
             ]
