@@ -43,7 +43,7 @@ def stream_markup_timer(_, videoid, chat_id, played, dur):
                 text="‹ قائمة التحكم ›",
                 callback_data=f"PanelMarkup {videoid}|{chat_id}",
             ),
-        
+        ][
             InlineKeyboardButton(
                 text="‹ السورس ›",
                 url=f"https://t.me/Source_Ze",
