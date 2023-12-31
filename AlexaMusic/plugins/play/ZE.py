@@ -26,7 +26,7 @@ from random import  choice, randint
 )
 async def huhh(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/c4f9c850312c8891385a9.jpg",
+        photo=f"https://telegra.ph/file/b9d126ec679d20fb7720e.jpg",
         caption=f"""**⩹━★⊷━⌞ 🔱 𝐒𝐎𝐔𝐑𝐂𝐄 • 𝐙𝐄 🔱 ⌝━⊶★━⩺**\nمرحبا بك عزيزي {message.from_user.mention} في قسم المطور مرتجل ميوزك\nللتحدث مع مطور السورس اضغط علي الازرار بالاسفل👇\n**⩹━★⊷━⌞ 🔱 𝐒𝐎𝐔𝐑𝐂𝐄 • 𝐙𝐄 🔱 ⌝━⊶★━⩺**""",
         reply_markup=InlineKeyboardMarkup(
             [
@@ -122,7 +122,7 @@ async def yas(client, message):
 )
 async def huhh(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/c4f9c850312c8891385a9.jpg",
+        photo=f"https://telegra.ph/file/b9d126ec679d20fb7720e.jpg",
         caption=f"""**⩹⊷━⌞ 🔱 𝐒𝐎𝐔𝐑𝐂𝐄 • 𝐙𝐄 🔱 ⌝━━⩺**\nمرحبا بك عزيزي {message.from_user.mention} في قسم الذكاء الاصتناعي الخاص بسورس زد إي\nلتتمكن من استخدام اوامر الذكاء الاصتناعي اكتب \n /gpt + السؤال بالاسفل👇\n**⩹━━⌞ 🔱 𝐒𝐎𝐔𝐑𝐂𝐄 • 𝐙𝐄 🔱 ⌝━━⩺**""",
         reply_markup=InlineKeyboardMarkup(
             [
